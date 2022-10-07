@@ -1,3 +1,14 @@
 <resources>
-    <string name="app_name">WeatherOrNot</string>
+    <!-- Login Page Strings -->
+    <string name="app_name">Lab 5</string>
+    <string name="app_logo">App Logo</string>
+    <string name="sign_in">Sign In</string>
+    <string name="email_field">Enter Email</string>
+    <string name="password_field">Enter Password</string>
+    <string name="login_button">Login</string>
+    <string name="signup_button">Sign Up</string>
+    <string name="guest_field">Continue as Guest</string>
+    <!-- Sign Up Page Strings -->
+    <string name="signup_text">Sign Up</string>
+
 </resources>
