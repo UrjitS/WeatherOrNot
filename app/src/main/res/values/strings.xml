@@ -28,5 +28,6 @@
         <item>overcast</item>
         <item>windy</item>
     </string-array>
+    <string name="title_activity_choose_location">ChooseLocation</string>
 
 </resources>

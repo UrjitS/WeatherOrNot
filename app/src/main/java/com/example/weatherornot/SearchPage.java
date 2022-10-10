@@ -2,29 +2,35 @@ package com.example.weatherornot;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.Spinner;
 
 public class SearchPage extends AppCompatActivity {
 
-    private Spinner weatherSpinner;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search_page);
 
-        weatherSpinner = findViewById(R.id.searchPage_weatherSpinner);
-
         populate_weatherSpinner();
     }
 
     /** Fills the weatherSpinner with different types of weather. */
     private void populate_weatherSpinner() {
-        String[] weatherArray = getResources().getStringArray(R.array.weather_types);
-        ArrayAdapter<String> stringArrayAdapter = new ArrayAdapter<>(SearchPage.this, android.R.layout.simple_spinner_item, weatherArray);
+        final String[] weatherArray = getResources().getStringArray(R.array.weather_types);
+        final ArrayAdapter<String> stringArrayAdapter = new ArrayAdapter<>(SearchPage.this, android.R.layout.simple_spinner_item, weatherArray);
         stringArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
-        weatherSpinner.setAdapter(stringArrayAdapter);
+        ((Spinner) findViewById(R.id.searchPage_weatherSpinner)).setAdapter(stringArrayAdapter);
+    }
+
+    /** Button handler for search button. */
+    public void searchButtonHandler(View view) {
+        final Intent i = new Intent(this, ChooseLocation.class);
+        startActivity(i);
     }
 }
