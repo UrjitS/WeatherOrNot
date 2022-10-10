@@ -29,5 +29,6 @@
         <item>windy</item>
     </string-array>
     <string name="title_activity_choose_location">ChooseLocation</string>
+    <string name="choose_location">Choose Location</string>
 
 </resources>
