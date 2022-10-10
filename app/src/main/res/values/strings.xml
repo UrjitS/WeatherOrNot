@@ -10,5 +10,23 @@
     <string name="guest_field">Continue as Guest</string>
     <!-- Sign Up Page Strings -->
     <string name="signup_text">Sign Up</string>
+    <string name="search">Search</string>
+    <string name="type">Type</string>
+    <string name="from">from</string>
+    <string name="to">to</string>
+    <string name="temperature">Temperature</string>
+    <string name="date">Date</string>
+    <string name="start_date">start date</string>
+    <string name="end_date">end date</string>
+    <string name="search_page_large">Search Page</string>
+
+    <string-array name="weather_types">
+        <item>sunny</item>
+        <item>rainy</item>
+        <item>stormy</item>
+        <item>cloudy</item>
+        <item>overcast</item>
+        <item>windy</item>
+    </string-array>
 
 </resources>
