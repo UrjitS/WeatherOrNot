@@ -31,4 +31,22 @@
     <string name="title_activity_choose_location">ChooseLocation</string>
     <string name="choose_location">Choose Location</string>
 
+    <!-- dummy Result -->
+    <string-array name="code_name">
+        <item>Canada</item>
+        <item>China</item>
+        <item>Hong kong</item>
+        <item>Ukraine</item>
+        <item>Lagos</item>
+        <item>Venice</item>
+        <item>Barcelona</item>
+        <item>Manchester</item>
+        <item>Southampton</item>
+        <item>Korea</item>
+        <item>New york</item>
+        <item>Dallas</item>
+        <item>LA</item>
+    </string-array>
+
+
 </resources>
