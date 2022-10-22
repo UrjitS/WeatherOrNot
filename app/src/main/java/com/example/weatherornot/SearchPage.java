@@ -6,8 +6,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.Spinner;
+
+import com.google.firebase.auth.FirebaseAuth;
 
 public class SearchPage extends AppCompatActivity {
 
@@ -33,4 +34,11 @@ public class SearchPage extends AppCompatActivity {
         final Intent i = new Intent(this, ChooseLocation.class);
         startActivity(i);
     }
+
+    public void signOut(View view) {
+        FirebaseAuth.getInstance().signOut();
+        final Intent i = new Intent(this, MainActivity.class);
+        startActivity(i);
+    }
+
 }

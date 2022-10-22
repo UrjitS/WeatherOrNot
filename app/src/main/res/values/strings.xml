@@ -1,6 +1,6 @@
 <resources>
     <!-- Login Page Strings -->
-    <string name="app_name">Lab 5</string>
+    <string name="app_name">Weather Or Not</string>
     <string name="app_logo">App Logo</string>
     <string name="sign_in">Sign In</string>
     <string name="email_field">Enter Email</string>
@@ -8,9 +8,13 @@
     <string name="login_button">Login</string>
     <string name="signup_button">Sign Up</string>
     <string name="guest_field">Continue as Guest</string>
+
     <!-- Sign Up Page Strings -->
     <string name="signup_text">Sign Up</string>
+
+    <!-- Search Page -->
     <string name="search">Search</string>
+    <string name="logOut">Log Out</string>
     <string name="type">Type</string>
     <string name="from">from</string>
     <string name="to">to</string>

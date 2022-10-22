@@ -1,6 +1,8 @@
 package com.example.weatherornot;
 
-import androidx.annotation.NonNull;
+import static com.example.weatherornot.AuthenticationValidator.emailIsEmail;
+import static com.example.weatherornot.AuthenticationValidator.passwordIsValid;
+
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -10,9 +12,6 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
@@ -31,10 +30,10 @@ public class MainActivity extends AppCompatActivity {
         super.onStart();
         // Check if user is signed in (non-null) and update UI accordingly.
         FirebaseUser currentUser = mAuth.getCurrentUser();
-//        if(currentUser != null){
-//            Intent loginUser = new Intent(MainActivity.this, SearchPage.class);
-//            startActivity(loginUser);
-//        }
+        if(currentUser != null){
+            Intent loginUser = new Intent(MainActivity.this, SearchPage.class);
+            startActivity(loginUser);
+        }
     }
     public void continueAsGuest(View view) {
         Intent continueAsGuest = new Intent(MainActivity.this, SearchPage.class);
@@ -53,10 +52,9 @@ public class MainActivity extends AppCompatActivity {
         String email = emailField.getText().toString().trim();
         String password = passwordField.getText().toString().trim();
 
-        mAuth.signInWithEmailAndPassword(email, password)
-                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
+        if (emailIsEmail(email) && passwordIsValid(password)) {
+            mAuth.signInWithEmailAndPassword(email, password)
+                    .addOnCompleteListener(this, task -> {
                         if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in user's information
                             Log.d("log", "signInWithEmail:success");
@@ -69,8 +67,12 @@ public class MainActivity extends AppCompatActivity {
                             Toast.makeText(MainActivity.this, "Authentication failed.",
                                     Toast.LENGTH_SHORT).show();
                         }
-                    }
-                });
+                    });
+        } else {
+            Toast.makeText(MainActivity.this, "Please enter valid email address and password.",
+                    Toast.LENGTH_SHORT).show();
+        }
+
 
     }
 }
