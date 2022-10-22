@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "368902899453",
+    "firebase_url": "https://weather-or-not-52e06-default-rtdb.firebaseio.com",
+    "project_id": "weather-or-not-52e06",
+    "storage_bucket": "weather-or-not-52e06.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:368902899453:android:17905c0cd0f2adaa6da094",
+        "android_client_info": {
+          "package_name": "com.example.weatherornot"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "368902899453-tmnd94p16mcdg0dk3dc5um127s1lfh91.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDdsPGemAHyJkc55lQejBS9X6o0lxO_u0k"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "368902899453-tmnd94p16mcdg0dk3dc5um127s1lfh91.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
