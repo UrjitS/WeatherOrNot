@@ -54,8 +54,12 @@ public class SearchPage extends AppCompatActivity implements NavigationView.OnNa
 
     /** Button handler for search button. */
     public void searchButtonHandler(View view) {
-        final Intent logoutPage = new Intent(this, ResultsPage.class);
-        startActivity(logoutPage);
+//        final Intent res = new Intent(this, LocationResultsFragment.class);
+//        startActivity(res);
+        Fragment fruit = new ResultsFragment();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.ctnFragment, fruit);
+        fragmentTransaction.commit();
     }
 
     @SuppressLint("NonConstantResourceId")
@@ -86,4 +90,7 @@ public class SearchPage extends AppCompatActivity implements NavigationView.OnNa
         return true;
     }
 
+    public void BackToSearch(View view) {
+        Toast.makeText(this, "Back", Toast.LENGTH_SHORT).show();
+    }
 }
