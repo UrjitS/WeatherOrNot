@@ -16,6 +16,7 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
     Context c;
     String[] planets, introductions;
     int[] images;
+    private ItemClickListener clickListener;
 
     public MyRecyclerViewAdapter(Context c, String[] planets, String[] introductions, int[] images) {
         this.c = c;
@@ -44,9 +45,11 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
         return images.length;
     }
 
+    public void setClickListener(ItemClickListener itemClickListener) {
+        this.clickListener = itemClickListener;
+    }
 
-
-    public class MyViewHolder extends RecyclerView.ViewHolder {
+    public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         TextView text1, text2;
         ImageView image;
@@ -55,9 +58,12 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
             text1 = itemView.findViewById(R.id.planet);
             text2 = itemView.findViewById(R.id.introduction);
             image = itemView.findViewById(R.id.imageView);
-//            itemView.setOnClickListener(this);
+            itemView.setOnClickListener(this);
 //            image.setOnClickListener(this);
         }
 
+        public void onClick(View itemView) {
+            if (clickListener != null) clickListener.onClick(itemView, getBindingAdapterPosition());
+        }
     }
 }

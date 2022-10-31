@@ -79,4 +79,6 @@
     <string name="imageTemp">Temp</string>
     <string name="locationTemp">Temp Location</string>
     <string name="introTemp">Temp Weather</string>
+
+
 </resources>
