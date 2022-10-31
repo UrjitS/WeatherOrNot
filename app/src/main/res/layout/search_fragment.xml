@@ -13,6 +13,18 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
+    <TextView
+        android:id="@+id/searchPage_textView_spinnerTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/default_space"
+        android:layout_marginTop="@dimen/default_space_child"
+        android:text="@string/type"
+        android:textColor="#FFE082"
+        android:textSize="24sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/searchPage_Title" />
+
     <Spinner
         android:id="@+id/searchPage_weatherSpinner"
         android:layout_width="0dp"
@@ -57,18 +69,6 @@
         app:layout_constraintTop_toBottomOf="@+id/searchPage_editTextDate_to"
         tools:ignore="DuplicateSpeakableTextCheck" />
 
-
-    <TextView
-        android:id="@+id/searchPage_textView_spinnerTitle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/default_space"
-        android:layout_marginTop="@dimen/default_space_child"
-        android:text="@string/type"
-        android:textColor="#FFE082"
-        android:textSize="24sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/searchPage_Title" />
 
     <EditText
         android:id="@+id/searchPage_editTextNumber_temperatureFrom"
@@ -162,4 +162,5 @@
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

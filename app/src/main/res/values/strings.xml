@@ -18,23 +18,22 @@
     <!-- Search Page -->
     <string name="search">Search</string>
     <string name="logOut">Log Out</string>
-    <string name="type">Type</string>
+    <string name="type">Activity Type</string>
     <string name="from">from</string>
     <string name="to">to</string>
-    <string name="temperature">Temperature</string>
+    <string name="temperature">Temperature Range</string>
     <string name="date">Date</string>
     <string name="start_date">start date</string>
     <string name="end_date">end date</string>
     <string name="search_page_large">Search Page</string>
 
     <string-array name="weather_types">
-        <item>sunny</item>
-        <item>rainy</item>
-        <item>stormy</item>
-        <item>cloudy</item>
-        <item>overcast</item>
-        <item>windy</item>
+        <item>Trails</item>
+        <item>Camping</item>
+        <item>Biking</item>
+        <item>Hiking</item>
     </string-array>
+
     <string name="title_activity_choose_location">ChooseLocation</string>
     <string name="choose_location">Choose Location</string>
 
