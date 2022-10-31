@@ -53,26 +53,28 @@
         <item>New york</item>
         <item>Dallas</item>
         <item>LA</item>
-    </string-array><string-array name="fruits">
-    <item>Apple</item>
-    <item>Banana</item>
-    <item>Grape</item>
-    <item>Kiwi</item>
-    <item>Orange</item>
-    <item>Pineapple</item>
-    <item>Strawberry</item>
-    <item>Watermelon</item>
+    </string-array>
+
+<string-array name="locations">
+    <item>Vancouver</item>
+    <item>Delta</item>
+    <item>Surrey</item>
+    <item>Burnaby</item>
+    <item>North Vancouver</item>
+    <item>South Vancouver</item>
+    <item>East Vancouver</item>
+    <item>Langley</item>
 </string-array>
 
-    <string-array name="fruits_price">
-        <item>$10</item>
-        <item>$1</item>
-        <item>$2</item>
-        <item>$3</item>
-        <item>$55</item>
-        <item>$55</item>
-        <item>$55</item>
-        <item>$55</item>
+    <string-array name="locations_description">
+        <item>Place Holder text for Vancouver</item>
+        <item>Place Holder text for Delta</item>
+        <item>Place Holder text for Surrey</item>
+        <item>Place Holder text for Burnaby</item>
+        <item>Place Holder text for North Vancouver</item>
+        <item>Place Holder text for South Vancouver</item>
+        <item>Place Holder text for East Vancouver</item>
+        <item>Place Holder text for Langley</item>
     </string-array>
 
     <string name="imageTemp">Temp</string>

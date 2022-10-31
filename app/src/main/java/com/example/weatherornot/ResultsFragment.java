@@ -14,6 +14,10 @@ import androidx.recyclerview.widget.RecyclerView;
 public class ResultsFragment extends Fragment {
 
     RecyclerView recyclerView;
+    String[] planets, introductions;
+    int[] images = {R.drawable.land, R.drawable.land, R.drawable.land,
+            R.drawable.land, R.drawable.land, R.drawable.land, R.drawable.land,
+            R.drawable.land};
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -23,23 +27,17 @@ public class ResultsFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.location_results_location_fragment, container, false);
+        // Inflate the layout for this fragment
+        View view = inflater.inflate(R.layout.fragment_gallery, container, false);
         recyclerView = view.findViewById(R.id.recyclerView);
+        planets = getResources().getStringArray(R.array.locations);
+        introductions = getResources().getStringArray(R.array.locations_description);
 
+        MyRecyclerViewAdapter myRecyclerViewAdapter = new MyRecyclerViewAdapter(getActivity(), planets, introductions, images);
+//        myRecyclerViewAdapter.setClickListener(this);
         recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
+        recyclerView.setAdapter(myRecyclerViewAdapter);
+
         return view;
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-        populate_weatherSpinner();
-    }
-
-    private void populate_weatherSpinner() {
-        final String[] weatherArray = getResources().getStringArray(R.array.weather_types);
-        final ArrayAdapter<String> stringArrayAdapter = new ArrayAdapter<>(this.getContext(), android.R.layout.simple_spinner_item, weatherArray);
-        stringArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
-        ((Spinner) this.getView().findViewById(R.id.searchPage_weatherSpinner)).setAdapter(stringArrayAdapter);
     }
 }
