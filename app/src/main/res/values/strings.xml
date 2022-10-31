@@ -8,7 +8,7 @@
     <string name="login_button">Login</string>
     <string name="signup_button">Sign Up</string>
     <string name="guest_field">Continue as Guest</string>
-    <string name="main_menu">Main Menu</string>
+    <string name="main_menu">Search Page</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
@@ -36,6 +36,7 @@
 
     <string name="title_activity_choose_location">ChooseLocation</string>
     <string name="choose_location">Choose Location</string>
+    <string name="back">Back</string>
 
     <!-- dummy Result -->
     <string-array name="code_name">

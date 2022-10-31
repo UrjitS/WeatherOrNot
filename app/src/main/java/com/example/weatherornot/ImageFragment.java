@@ -32,20 +32,22 @@ public class ImageFragment extends Fragment {
                              Bundle savedInstanceState) {
         View myView = inflater.inflate(R.layout.fragment_image, container, false);
 //        View myView = inflater.inflate(R.layout.fragment_frame_layout, container, false);
-        TextView textView = myView.findViewById(R.id.planetName);
-        textView.setText(planet);
+        TextView locName = myView.findViewById(R.id.planetName);
+        locName.setText(planet);
+        TextView currentWeather = myView.findViewById(R.id.temperature);
+        String weth = "Current Temperature 12 degrees";
+        currentWeather.setText(weth);
         ImageView imageView = myView.findViewById(R.id.planetImage);
         imageView.setImageResource(imageId);
+
         Button btnBack = myView.findViewById(R.id.btnBack);
         btnBack.setOnClickListener(view -> {
             ResultsFragment galleryFragment = new ResultsFragment();
             getActivity().getSupportFragmentManager().beginTransaction()
-//                    .setCustomAnimations(
-//                            R.anim.slide_in_left, // enter
-//                            R.anim.fade_out, // exit
-//                            R.anim.fade_in, // popEnter
-//                            R.anim.slide_out_left // popExit
-//                    )
+                    .setCustomAnimations(
+                            R.anim.fade_in, // popEnter
+                            R.anim.fade_out // exit
+                    )
                     .replace(R.id.ctnFragment, galleryFragment)
 //                    .addToBackStack(null)
                     .commit();
