@@ -1,169 +1,54 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:app="http://schemas.android.com/apk/res-auto"
+xmlns:tools="http://schemas.android.com/tools"
+android:fitsSystemWindows="true"
+android:orientation="vertical"
+android:layout_width="match_parent"
+android:layout_height="match_parent"
+android:background="@color/white">
+
+<include layout="@layout/toolbar"
+    android:id="@+id/toolbar" />
+
+<androidx.drawerlayout.widget.DrawerLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/app_background"
-    tools:context=".SearchPage">
+    tools:context=".SearchPage"
+    android:id="@+id/drawer_layout"
+    android:fitsSystemWindows="true"
+    tools:openDrawer="start">
 
-    <Spinner
-        android:id="@+id/searchPage_weatherSpinner"
-        android:layout_width="0dp"
-        android:layout_height="48dp"
-        android:layout_marginStart="@dimen/default_space"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="@dimen/default_space"
-        android:background="#FFFFFF"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/searchPage_textView_spinnerTitle" />
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/app_background"
+        tools:context=".SearchPage">
 
-    <TextView
-        android:id="@+id/searchPage_Title"
+        <androidx.fragment.app.FragmentContainerView
+            android:id="@+id/ctnFragment"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <com.google.android.material.navigation.NavigationView
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="200dp"
-        android:layout_marginTop="@dimen/default_space_child"
-        android:layout_marginEnd="200dp"
-        android:text="@string/search"
-        android:textColor="@color/white"
-        android:textSize="34sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_height="match_parent"
+        android:id="@+id/nav_view"
+        app:headerLayout="@layout/header"
+        app:menu="@menu/main_menu"
+        android:layout_gravity="start" />
 
-    <Button
-        android:id="@+id/searchPage_button_search"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="150dp"
-        android:layout_marginTop="@dimen/default_space"
-        android:layout_marginEnd="150dp"
-        android:layout_marginBottom="@dimen/default_space"
-        android:text="@string/search"
-        android:onClick="searchButtonHandler"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/searchPage_editTextDate_to" />
 
-    <Button
-        android:id="@+id/searchPage_button_search2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/default_space"
-        android:layout_marginBottom="@dimen/default_space"
-        android:onClick="signOut"
-        android:text="@string/logOut"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.125"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/searchPage_editTextDate_to"
-        app:layout_constraintVertical_bias="1.0" />
 
-    <TextView
-        android:id="@+id/searchPage_textView_spinnerTitle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/default_space"
-        android:layout_marginTop="@dimen/default_space_child"
-        android:text="@string/type"
-        android:textColor="@color/white"
-        android:textSize="24sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/searchPage_Title" />
+</androidx.drawerlayout.widget.DrawerLayout>
 
-    <EditText
-        android:id="@+id/searchPage_editTextNumber_temperatureFrom"
-        android:layout_width="50dp"
-        android:layout_height="48dp"
-        android:layout_marginStart="40dp"
-        android:layout_marginTop="@dimen/default_space_child"
-        android:background="@color/white"
-        android:ems="10"
-        android:hint="@string/from"
-        android:inputType="number"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/searchPage_textView_temperatureFrom"
-        android:importantForAutofill="no" />
 
-    <EditText
-        android:id="@+id/searchPage_editTextNumber_temperatureFrom2"
-        android:layout_width="50dp"
-        android:layout_height="48dp"
-        android:layout_marginStart="100dp"
-        android:background="@color/white"
-        android:ems="10"
-        android:hint="@string/to"
-        android:inputType="number"
-        app:layout_constraintStart_toEndOf="@+id/searchPage_editTextNumber_temperatureFrom"
-        app:layout_constraintTop_toTopOf="@+id/searchPage_editTextNumber_temperatureFrom"
-        android:importantForAutofill="no" />
 
-    <TextView
-        android:id="@+id/searchPage_textView_temperatureFrom"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/default_space"
-        android:layout_marginTop="@dimen/default_space_child"
-        android:text="@string/temperature"
-        android:textColor="@color/white"
-        android:textSize="24sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/searchPage_weatherSpinner" />
-
-    <TextView
-        android:id="@+id/searchPage_textView_temperatureFrom4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/default_space"
-        android:layout_marginTop="@dimen/default_space_child"
-        android:text="@string/date"
-        android:textColor="@color/white"
-        android:textSize="24sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/searchPage_editTextNumber_temperatureFrom" />
-
-    <EditText
-        android:id="@+id/searchPage_editTextDate"
-        android:layout_width="wrap_content"
-        android:layout_height="48dp"
-        android:layout_marginStart="@dimen/default_space"
-        android:layout_marginTop="@dimen/default_space_child"
-        android:background="@color/white"
-        android:ems="10"
-        android:hint="@string/start_date"
-        android:inputType="date"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/searchPage_textView_temperatureFrom4"
-        android:importantForAutofill="no" />
-
-    <EditText
-        android:id="@+id/searchPage_editTextDate_to"
-        android:layout_width="wrap_content"
-        android:layout_height="48dp"
-        android:layout_marginStart="@dimen/default_space"
-        android:layout_marginTop="@dimen/default_space_child"
-        android:background="@color/white"
-        android:ems="10"
-        android:hint="@string/end_date"
-        android:inputType="date"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/searchPage_editTextDate"
-        android:importantForAutofill="no" />
-
-    <TextView
-        android:id="@+id/textView6"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/search_page_large"
-        android:textSize="50sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>

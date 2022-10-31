@@ -8,6 +8,9 @@
     <string name="login_button">Login</string>
     <string name="signup_button">Sign Up</string>
     <string name="guest_field">Continue as Guest</string>
+    <string name="main_menu">Main Menu</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
 
     <!-- Sign Up Page Strings -->
     <string name="signup_text">Sign Up</string>
@@ -50,5 +53,29 @@
         <item>New york</item>
         <item>Dallas</item>
         <item>LA</item>
+    </string-array><string-array name="fruits">
+    <item>Apple</item>
+    <item>Banana</item>
+    <item>Grape</item>
+    <item>Kiwi</item>
+    <item>Orange</item>
+    <item>Pineapple</item>
+    <item>Strawberry</item>
+    <item>Watermelon</item>
+</string-array>
+
+    <string-array name="fruits_price">
+        <item>$10</item>
+        <item>$1</item>
+        <item>$2</item>
+        <item>$3</item>
+        <item>$55</item>
+        <item>$55</item>
+        <item>$55</item>
+        <item>$55</item>
     </string-array>
+
+    <string name="imageTemp">Temp</string>
+    <string name="locationTemp">Temp Location</string>
+    <string name="introTemp">Temp Weather</string>
 </resources>
