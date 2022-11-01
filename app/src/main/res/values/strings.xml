@@ -55,16 +55,16 @@
         <item>LA</item>
     </string-array>
 
-<string-array name="locations">
-    <item>Vancouver</item>
-    <item>Delta</item>
-    <item>Surrey</item>
-    <item>Burnaby</item>
-    <item>North Vancouver</item>
-    <item>South Vancouver</item>
-    <item>East Vancouver</item>
-    <item>Langley</item>
-</string-array>
+    <string-array name="locations">
+        <item>Vancouver</item>
+        <item>Delta</item>
+        <item>Surrey</item>
+        <item>Burnaby</item>
+        <item>North Vancouver</item>
+        <item>South Vancouver</item>
+        <item>East Vancouver</item>
+        <item>Langley</item>
+    </string-array>
 
     <string-array name="locations_description">
         <item>Place Holder text for Vancouver</item>
@@ -80,6 +80,7 @@
     <string name="imageTemp">Temp</string>
     <string name="locationTemp">Temp Location</string>
     <string name="introTemp">Temp Weather</string>
+    <string name="title_activity_maps">MapsActivity</string>
 
 
 </resources>

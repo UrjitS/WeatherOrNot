@@ -54,12 +54,12 @@ public class SearchPage extends AppCompatActivity implements NavigationView.OnNa
 
     /** Button handler for search button. */
     public void searchButtonHandler(View view) {
-//        final Intent res = new Intent(this, LocationResultsFragment.class);
-//        startActivity(res);
-        Fragment fruit = new ResultsFragment();
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.ctnFragment, fruit);
-        fragmentTransaction.commit();
+        final Intent res = new Intent(this, MapsActivity.class);
+        startActivity(res);
+//        Fragment fruit = new ResultsFragment();
+//        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+//        fragmentTransaction.replace(R.id.ctnFragment, fruit);
+//        fragmentTransaction.commit();
     }
 
     @SuppressLint("NonConstantResourceId")
