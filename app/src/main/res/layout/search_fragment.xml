@@ -19,13 +19,14 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/default_space"
         android:layout_marginTop="@dimen/default_space_child"
-        android:text="@string/type"
+        android:text="@string/destination"
+        android:layout_marginLeft="150dp"
         android:textColor="#FFE082"
         android:textSize="24sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/searchPage_Title" />
 
-    <Spinner
+    <!--<Spinner
         android:id="@+id/searchPage_weatherSpinner"
         android:layout_width="0dp"
         android:layout_height="48dp"
@@ -38,7 +39,7 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/searchPage_textView_spinnerTitle" />
-
+-->
     <TextView
         android:id="@+id/searchPage_Title"
         android:layout_width="wrap_content"
@@ -53,97 +54,81 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <Button
-        android:id="@+id/searchPage_button_search"
+
+    <!-- <EditText
+          android:id="@+id/searchPage_editTextNumber_temperatureFrom"
+          android:layout_width="50dp"
+          android:layout_height="48dp"
+          android:layout_marginStart="40dp"
+          android:layout_marginTop="@dimen/default_space_child"
+          android:background="@color/white"
+          android:ems="10"
+          android:hint="@string/from"
+          android:importantForAutofill="no"
+          android:inputType="number"
+          android:textColorHint="#757575"
+          app:layout_constraintStart_toStartOf="parent"
+          app:layout_constraintTop_toBottomOf="@+id/searchPage_textView_temperatureFrom" />-->
+
+<!--    <EditText-->
+<!--        android:id="@+id/searchPage_editTextNumber_temperatureFrom2"-->
+<!--        android:layout_width="50dp"-->
+<!--        android:layout_height="48dp"-->
+<!--        android:layout_marginStart="100dp"-->
+<!--        android:background="@color/white"-->
+<!--        android:ems="10"-->
+<!--        android:hint="@string/to"-->
+<!--        android:importantForAutofill="no"-->
+<!--        android:inputType="number"-->
+<!--        android:textColorHint="#757575"-->
+<!--        app:layout_constraintStart_toEndOf="@+id/searchPage_editTextNumber_temperatureFrom"-->
+<!--        app:layout_constraintTop_toTopOf="@+id/searchPage_editTextNumber_temperatureFrom" />-->
+
+<!--    <TextView-->
+<!--        android:id="@+id/searchPage_textView_temperatureFrom"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginStart="@dimen/default_space"-->
+<!--        android:layout_marginTop="@dimen/default_space_child"-->
+<!--        android:text="@string/temperature"-->
+<!--        android:textColor="@color/white"-->
+<!--        android:textSize="24sp"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/searchPage_weatherSpinner" />-->
+
+<!--    <TextView-->
+<!--        android:id="@+id/searchPage_textView_temperatureFrom4"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginStart="@dimen/default_space"-->
+<!--        android:layout_marginTop="@dimen/default_space_child"-->
+<!--        android:text="@string/date"-->
+<!--        android:textColor="@color/white"-->
+<!--        android:textSize="24sp"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/searchPage_editTextNumber_temperatureFrom" />-->
+
+    <EditText
+        android:id="@+id/searchPage_editTextLocation"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="150dp"
-        android:layout_marginTop="@dimen/default_space"
-        android:layout_marginEnd="150dp"
-        android:layout_marginBottom="@dimen/default_space"
-        android:onClick="searchButtonHandler"
-        android:text="@string/search"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/searchPage_editTextDate_to"
-        tools:ignore="DuplicateSpeakableTextCheck" />
-
-
-    <EditText
-        android:id="@+id/searchPage_editTextNumber_temperatureFrom"
-        android:layout_width="50dp"
-        android:layout_height="48dp"
-        android:layout_marginStart="40dp"
-        android:layout_marginTop="@dimen/default_space_child"
-        android:background="@color/white"
-        android:ems="10"
-        android:hint="@string/from"
-        android:importantForAutofill="no"
-        android:inputType="number"
-        android:textColorHint="#757575"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/searchPage_textView_temperatureFrom" />
-
-    <EditText
-        android:id="@+id/searchPage_editTextNumber_temperatureFrom2"
-        android:layout_width="50dp"
         android:layout_height="48dp"
         android:layout_marginStart="100dp"
-        android:background="@color/white"
+        android:layout_marginBottom="480dp"
         android:ems="10"
-        android:hint="@string/to"
+        android:hint="@string/stopNo"
         android:importantForAutofill="no"
-        android:inputType="number"
-        android:textColorHint="#757575"
-        app:layout_constraintStart_toEndOf="@+id/searchPage_editTextNumber_temperatureFrom"
-        app:layout_constraintTop_toTopOf="@+id/searchPage_editTextNumber_temperatureFrom" />
+        android:inputType="text"
+        android:textColorHint="@color/black"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
-    <TextView
-        android:id="@+id/searchPage_textView_temperatureFrom"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/default_space"
-        android:layout_marginTop="@dimen/default_space_child"
-        android:text="@string/temperature"
-        android:textColor="@color/white"
-        android:textSize="24sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/searchPage_weatherSpinner" />
 
-    <TextView
-        android:id="@+id/searchPage_textView_temperatureFrom4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/default_space"
-        android:layout_marginTop="@dimen/default_space_child"
-        android:text="@string/date"
-        android:textColor="@color/white"
-        android:textSize="24sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/searchPage_editTextNumber_temperatureFrom" />
-
-    <EditText
-        android:id="@+id/searchPage_editTextDate"
-        android:layout_width="wrap_content"
-        android:layout_height="48dp"
-        android:layout_marginStart="@dimen/default_space"
-        android:layout_marginTop="@dimen/default_space_child"
-        android:background="@color/white"
-        android:ems="10"
-        android:hint="@string/start_date"
-        android:importantForAutofill="no"
-        android:inputType="date"
-        android:textColorHint="#757575"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/searchPage_textView_temperatureFrom4" />
-
-    <EditText
+    <!--<EditText
         android:id="@+id/searchPage_editTextDate_to"
         android:layout_width="wrap_content"
         android:layout_height="48dp"
-        android:layout_marginStart="@dimen/default_space"
-        android:layout_marginTop="@dimen/default_space_child"
+        android:layout_marginStart="100dp"
+        android:layout_marginTop="32dp"
         android:background="@color/white"
         android:ems="10"
         android:hint="@string/end_date"
@@ -152,6 +137,53 @@
         android:textColorHint="#757575"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/searchPage_editTextDate" />
+-->
+    <Button
+        android:id="@+id/searchPage_button_search"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="0dp"
+        android:layout_marginEnd="230dp"
+        android:layout_marginBottom="392dp"
+        android:onClick="searchButtonHandler"
+        android:text="@string/search"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.478"
+        app:layout_constraintStart_toStartOf="@id/searchPage_editTextLocation"
+        tools:ignore="DuplicateSpeakableTextCheck" />
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center|top"
+    android:orientation="vertical" >
+
+    <TextView
+        android:id="@+id/result"
+        android:layout_width="match_parent"
+        android:layout_height="286dp"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="430dp"
+        android:layout_marginEnd="0dp"
+        android:lineSpacingExtra="5dp"
+        android:padding="5dp"
+        android:textSize="20sp" />
+</LinearLayout>
+
+    <Button
+        android:id="@+id/test_searchPage_button_search"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="150dp"
+        android:layout_marginEnd="100dp"
+        android:layout_marginBottom="392dp"
+        android:text="@string/testing_api"
+        android:onClick="TestingAPIButtonHandler"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="@id/searchPage_editTextLocation"
+        tools:ignore="DuplicateSpeakableTextCheck" />
 
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/ctnFragment"
@@ -159,8 +191,9 @@
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

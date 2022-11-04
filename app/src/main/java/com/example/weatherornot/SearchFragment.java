@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.Spinner;
 
 public class SearchFragment extends Fragment {
@@ -34,7 +35,7 @@ public class SearchFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
-        populate_weatherSpinner();
+        //populate_weatherSpinner();
     }
 
     //    /** Fills the weatherSpinner with different types of weather. */
@@ -42,7 +43,6 @@ public class SearchFragment extends Fragment {
         final String[] weatherArray = getResources().getStringArray(R.array.weather_types);
         final ArrayAdapter<String> stringArrayAdapter = new ArrayAdapter<>(this.getContext(), android.R.layout.simple_spinner_item, weatherArray);
         stringArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
-        ((Spinner) this.getView().findViewById(R.id.searchPage_weatherSpinner)).setAdapter(stringArrayAdapter);
+        //((Spinner) this.getView().findViewById(R.id.searchPage_weatherSpinner)).setAdapter(stringArrayAdapter);
     }
-
 }

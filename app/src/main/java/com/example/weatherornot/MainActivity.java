@@ -72,7 +72,5 @@ public class MainActivity extends AppCompatActivity {
             Toast.makeText(MainActivity.this, "Please enter valid email address and password.",
                     Toast.LENGTH_SHORT).show();
         }
-
-
     }
 }
