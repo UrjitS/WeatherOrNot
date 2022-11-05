@@ -1,10 +1,10 @@
 package com.example.weatherornot;
 
 import android.annotation.SuppressLint;
-import android.app.DownloadManager;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -25,16 +25,16 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 
 import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
+import org.json.JSONException;
+
+import fr.arnaudguyon.xmltojsonlib.XmlToJson;
 
 public class SearchPage extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     DrawerLayout drawerLayout;
@@ -145,37 +145,37 @@ public class SearchPage extends AppCompatActivity implements NavigationView.OnNa
         @Override
         protected String doInBackground(String... strings) {
             RequestQueue queue = Volley.newRequestQueue(SearchPage.this);
-            JsonObjectRequest request =
-                    new JsonObjectRequest(Request.Method.GET, strings[0],
-                            null, new Response.Listener<JSONObject>() {
-                        @Override
-                        public void onResponse(JSONObject response) {
-                            try {
-                                JSONArray busesObj = response.getJSONArray("Buses");
-                                JSONObject bus = busesObj.getJSONObject(0);
-                                String direction = bus.getString("Direction");
-                                String destination = bus.getString("Destination");
-                                String pattern = bus.getString("Pattern");
-                                int routeNo = bus.getInt("RouteNo");
-                                int vehicleNo = bus.getInt("VehicleNo");
+            StringRequest stringRequest = new StringRequest(Request.Method.GET, strings[0],
+                    response -> {
+                        try {
+                            XmlToJson xmlToJson = new XmlToJson.Builder(response).build();
+                            JSONObject jsonObject = xmlToJson.toJson();
+                            Log.d("resp", String.valueOf(jsonObject));
 
-                                textView.setText("Bus details: " +
-                                        "\nDirection: " + direction
-                                        + "\nDestination: " +destination
-                                        + "\nBus Pattern: " + pattern
-                                        + "\nBus Route number: " + routeNo
-                                        + "\nBus Vehicle number: "+ vehicleNo);
-                            } catch (JSONException e) {
-                                e.getMessage();
-                            }
+                            JSONObject busesObj = jsonObject.getJSONObject("Buses");
+                            JSONArray bus = busesObj.getJSONArray("Bus");
+                            String direction = bus.getJSONObject(0).getString("Direction");
+                            String destination = bus.getJSONObject(0).getString("Destination");
+                            String pattern = bus.getJSONObject(0).getString("Pattern");
+                            String routeNo = bus.getJSONObject(0).getString("RouteNo");
+                            int vehicleNo = bus.getJSONObject(0).getInt("VehicleNo");
+                            Log.d("resp", direction);
+                            Log.d("resp", destination);
+                            Log.d("resp", pattern);
+                            Log.d("resp", routeNo);
+                            Log.d("resp", String.valueOf(vehicleNo));
+                            textView.setText("Bus details: " +
+                                    "\nDirection: " + direction
+                                    + "\nDestination: " +destination
+                                    + "\nBus Pattern: " + pattern
+                                    + "\nBus Route number: " + routeNo
+                                    + "\nBus Vehicle number: "+ vehicleNo);
+                        } catch (JSONException e) {
+                            e.getMessage();
                         }
-                    }, new Response.ErrorListener() {
-                        @Override
-                        public void onErrorResponse(VolleyError error) {
-                            Toast.makeText(SearchPage.this, error.toString(), Toast.LENGTH_SHORT).show();
-                        }
-                    });
-            queue.add(request);
+                    }, error -> Log.d("resp", "hello"));
+
+            queue.add(stringRequest);
             return null;
         }
     }
