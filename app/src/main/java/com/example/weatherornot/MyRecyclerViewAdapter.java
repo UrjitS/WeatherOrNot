@@ -11,14 +11,16 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.ArrayList;
+
 public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAdapter.MyViewHolder> {
 
     Context c;
-    String[] planets, introductions;
+    ArrayList<String> planets, introductions;
     int[] images;
     private ItemClickListener clickListener;
 
-    public MyRecyclerViewAdapter(Context c, String[] planets, String[] introductions, int[] images) {
+    public MyRecyclerViewAdapter(Context c, ArrayList<String> planets, ArrayList<String> introductions, int[] images) {
         this.c = c;
         this.planets = planets;
         this.introductions = introductions;
@@ -35,8 +37,8 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
-        holder.text1.setText(planets[position]);
-        holder.text2.setText(introductions[position]);
+        holder.text1.setText(planets.get(position));
+        holder.text2.setText(introductions.get(position));
         holder.image.setImageResource(images[position]);
     }
 

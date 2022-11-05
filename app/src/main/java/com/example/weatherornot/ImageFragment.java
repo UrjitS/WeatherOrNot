@@ -42,14 +42,14 @@ public class ImageFragment extends Fragment {
 
         Button btnBack = myView.findViewById(R.id.btnBack);
         btnBack.setOnClickListener(view -> {
-            ResultsFragment galleryFragment = new ResultsFragment();
+            Fragment fruit = new SearchFragment();
             getActivity().getSupportFragmentManager().beginTransaction()
                     .setCustomAnimations(
                             R.anim.fade_in, // popEnter
                             R.anim.fade_out // exit
                     )
-                    .replace(R.id.ctnFragment, galleryFragment)
-//                    .addToBackStack(null)
+                    .replace(R.id.ctnFragment, fruit)
+                    .addToBackStack(null)
                     .commit();
         });
 

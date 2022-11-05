@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -34,6 +33,8 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import org.json.JSONException;
 
+import java.util.ArrayList;
+
 import fr.arnaudguyon.xmltojsonlib.XmlToJson;
 
 public class SearchPage extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
@@ -46,6 +47,9 @@ public class SearchPage extends AppCompatActivity implements NavigationView.OnNa
     private final String appId = "H6I5JajNoTKkm7Ub2Wj0";
     private final String url2 = "http://api.translink.ca/rttiapi/v1/buses";
     TextView textView;
+    boolean finishedSearch = false;
+    private ArrayList<String> busesDestination = new ArrayList<>();
+    private ArrayList<String> busesTime = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,16 +83,6 @@ public class SearchPage extends AppCompatActivity implements NavigationView.OnNa
     public void searchButtonHandler(View view) {
 //        final Intent res = new Intent(this, MapsActivity.class);
 //        startActivity(res);
-        Fragment fruit = new ResultsFragment();
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.ctnFragment, fruit);
-        fragmentTransaction.commit();
-    }
-
-    /**
-     * Button handler for search button.
-     */
-    public void TestingAPIButtonHandler(View view) {
         getBuses();
     }
 
@@ -126,7 +120,6 @@ public class SearchPage extends AppCompatActivity implements NavigationView.OnNa
 
     private void getBuses() {
         location = findViewById(R.id.searchPage_editTextLocation);
-        Button button = findViewById(R.id.test_searchPage_button_search);
         textView = findViewById(R.id.result);
         textView.setText("");
         String tempURL = "";
@@ -154,22 +147,36 @@ public class SearchPage extends AppCompatActivity implements NavigationView.OnNa
 
                             JSONObject busesObj = jsonObject.getJSONObject("Buses");
                             JSONArray bus = busesObj.getJSONArray("Bus");
-                            String direction = bus.getJSONObject(0).getString("Direction");
-                            String destination = bus.getJSONObject(0).getString("Destination");
-                            String pattern = bus.getJSONObject(0).getString("Pattern");
-                            String routeNo = bus.getJSONObject(0).getString("RouteNo");
-                            int vehicleNo = bus.getJSONObject(0).getInt("VehicleNo");
-                            Log.d("resp", direction);
-                            Log.d("resp", destination);
-                            Log.d("resp", pattern);
-                            Log.d("resp", routeNo);
-                            Log.d("resp", String.valueOf(vehicleNo));
-                            textView.setText("Bus details: " +
-                                    "\nDirection: " + direction
-                                    + "\nDestination: " +destination
-                                    + "\nBus Pattern: " + pattern
-                                    + "\nBus Route number: " + routeNo
-                                    + "\nBus Vehicle number: "+ vehicleNo);
+                            for (int i = 0; i < bus.length(); i++) {
+                                String time = bus.getJSONObject(i).getString("RecordedTime");
+                                String destination = bus.getJSONObject(i).getString("Destination");
+//                                String pattern = bus.getJSONObject(i).getString("Pattern");
+//                                String routeNo = bus.getJSONObject(i).getString("RouteNo");
+//                                int vehicleNo = bus.getJSONObject(i).getInt("VehicleNo");
+                                busesDestination.add(destination);
+                                busesTime.add(time);
+                            }
+                            Bundle bundle = new Bundle();
+                            bundle.putStringArrayList("Destination", busesDestination);
+                            bundle.putStringArrayList("Times", busesTime);
+                            Fragment fruit = new ResultsFragment();
+                            fruit.setArguments(bundle);
+                            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                            fragmentTransaction.replace(R.id.ctnFragment, fruit);
+                            fragmentTransaction.commit();
+//                            searchButtonHandler();
+//                            Log.d("resp", direction);
+//                            Log.d("resp", destination);
+//                            Log.d("resp", pattern);
+//                            Log.d("resp", routeNo);
+//                            Log.d("resp", String.valueOf(vehicleNo));
+//                            textView.setText("Bus details: " +
+//                                    "\nDirection: " + direction
+//                                    + "\nDestination: " +destination
+//                                    + "\nBus Pattern: " + pattern
+//                                    + "\nBus Route number: " + routeNo
+//                                    + "\nBus Vehicle number: "+ vehicleNo);
+                            finishedSearch = true;
                         } catch (JSONException e) {
                             e.getMessage();
                         }
@@ -177,6 +184,11 @@ public class SearchPage extends AppCompatActivity implements NavigationView.OnNa
 
             queue.add(stringRequest);
             return null;
+        }
+        @Override
+        protected void onPostExecute(String bitmap) {
+            //super.onPostExecute(bitmap);
+
         }
     }
 }

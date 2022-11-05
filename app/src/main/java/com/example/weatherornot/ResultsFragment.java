@@ -11,13 +11,13 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.ArrayList;
+
 public class ResultsFragment extends Fragment implements ItemClickListener {
 
     RecyclerView recyclerView;
-    String[] planets, introductions;
-    int[] images = {R.drawable.land, R.drawable.land, R.drawable.land,
-            R.drawable.land, R.drawable.land, R.drawable.land, R.drawable.land,
-            R.drawable.land};
+    ArrayList<String> planets, introductions;
+    int[] images;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -27,20 +27,17 @@ public class ResultsFragment extends Fragment implements ItemClickListener {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-//        View view = inflater.inflate(R.layout.fragment_gallery, container, false);
-//        recyclerView = view.findViewById(R.id.recyclerView);
-//        planets = getResources().getStringArray(R.array.locations);
-//        introductions = getResources().getStringArray(R.array.locations_description);
-//
-//        MyRecyclerViewAdapter myRecyclerViewAdapter = new MyRecyclerViewAdapter(getActivity(), planets, introductions, images);
-////        myRecyclerViewAdapter.setClickListener(this);
-//        recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
-//        recyclerView.setAdapter(myRecyclerViewAdapter);
+
         View view = inflater.inflate(R.layout.fragment_gallery, container, false);
         recyclerView = view.findViewById(R.id.recyclerView);
-        planets = getResources().getStringArray(R.array.locations);
-        introductions = getResources().getStringArray(R.array.locations_description);
+        Bundle b = getArguments();
+        planets = b.getStringArrayList("Destination");
+        introductions = b.getStringArrayList("Times");
+
+        images = new int[planets.size()];
+        for (int i = 0; i < planets.size(); i++) {
+            images[i] = R.drawable.land;
+        }
 
         MyRecyclerViewAdapter myRecyclerViewAdapter = new MyRecyclerViewAdapter(getActivity(), planets, introductions, images);
         myRecyclerViewAdapter.setClickListener(this);
@@ -54,7 +51,7 @@ public class ResultsFragment extends Fragment implements ItemClickListener {
     public void onClick(View view, int position) {
         ImageFragment imageFragment = new ImageFragment();
         Bundle bundle = new Bundle();
-        bundle.putString("planet", planets[position]);
+        bundle.putString("planet", planets.get(position));
         bundle.putInt("image", images[position]);
         imageFragment.setArguments(bundle);
         getActivity().getSupportFragmentManager().beginTransaction()
@@ -65,7 +62,6 @@ public class ResultsFragment extends Fragment implements ItemClickListener {
 //                        R.anim.slide_out_right // popExit
 //                )
                 .replace(R.id.ctnFragment, imageFragment)
-//                .addToBackStack(null)
                 .commit();
     }
 }
