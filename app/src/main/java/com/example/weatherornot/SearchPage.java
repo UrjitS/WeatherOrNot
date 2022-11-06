@@ -86,6 +86,15 @@ public class SearchPage extends AppCompatActivity implements NavigationView.OnNa
         getBuses();
     }
 
+    /**
+     * for "SEE MAP" Button, go to google map API
+     * @param view Current view.
+     */
+    public void go_to_map(View view) {
+        final Intent toMap = new Intent(this, GoogleMap.class);
+        startActivity(toMap);
+    }
+
     @SuppressLint("NonConstantResourceId")
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {

@@ -48,7 +48,7 @@
         android:layout_marginTop="@dimen/default_space_child"
         android:layout_marginEnd="200dp"
         android:text="@string/search"
-        android:textColor="#D50000"
+        android:textColor="#3E2723"
         android:textSize="34sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -112,7 +112,6 @@
         android:id="@+id/searchPage_editTextLocation"
         android:layout_width="wrap_content"
         android:layout_height="48dp"
-        android:layout_marginStart="100dp"
         android:layout_marginBottom="480dp"
         android:ems="10"
         android:hint="@string/stopNo"
@@ -120,6 +119,7 @@
         android:inputType="text"
         android:textColorHint="@color/black"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
 
@@ -142,8 +142,6 @@
         android:id="@+id/searchPage_button_search"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="0dp"
-        android:layout_marginEnd="230dp"
         android:layout_marginBottom="392dp"
         android:onClick="searchButtonHandler"
         android:text="@string/search"
@@ -151,34 +149,47 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.478"
         app:layout_constraintStart_toStartOf="@id/searchPage_editTextLocation"
-        tools:ignore="DuplicateSpeakableTextCheck" />
-<LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:gravity="center|top"
-    android:orientation="vertical" >
+        tools:ignore="DuplicateSpeakableTextCheck,DuplicateClickableBoundsCheck" />
 
-    <TextView
-        android:id="@+id/result"
-        android:layout_width="match_parent"
-        android:layout_height="286dp"
+    <Button
+        android:id="@+id/google_map_search"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginStart="0dp"
-        android:layout_marginTop="430dp"
-        android:layout_marginEnd="0dp"
-        android:lineSpacingExtra="5dp"
-        android:padding="5dp"
-        android:textSize="20sp" />
-</LinearLayout>
-
-    <androidx.fragment.app.FragmentContainerView
-        android:id="@+id/ctnFragment"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_marginEnd="230dp"
+        android:layout_marginBottom="392dp"
+        android:text="@string/google_map_string"
+        android:onClick="go_to_map"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintHorizontal_bias="0.478"
+        app:layout_constraintStart_toStartOf="@id/searchPage_editTextLocation"
+        tools:ignore="DuplicateSpeakableTextCheck" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center|top"
+        android:orientation="vertical"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="-97dp">
+
+        <TextView
+            android:id="@+id/result"
+            android:textAlignment="center"
+            android:layout_width="match_parent"
+            android:layout_height="286dp"
+            android:layout_marginStart="0dp"
+            android:layout_marginTop="430dp"
+            android:layout_marginEnd="0dp"
+            android:lineSpacingExtra="5dp"
+            android:padding="5dp"
+            android:textSize="20sp" />
+
+        <androidx.fragment.app.FragmentContainerView
+            android:id="@+id/ctnFragment"
+            android:layout_width="match_parent"
+            android:layout_height="0dp" />
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

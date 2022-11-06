@@ -17,6 +17,7 @@
 
     <!-- Search Page -->
     <string name="search">Search</string>
+    <string name="google_map_string">See Map</string>
     <string name="logOut">Log Out</string>
     <string name="type">Activity Type</string>
     <string name="from">from</string>
