@@ -27,6 +27,9 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -50,6 +53,11 @@ public class SearchPage extends AppCompatActivity implements NavigationView.OnNa
     private ArrayList<String> busPattern = new ArrayList<>();
     private ArrayList<String> busRouteNo = new ArrayList<>();
     private ArrayList<String> busDirection = new ArrayList<>();
+
+
+    FirebaseAuth firebaseAuth;
+
+    public final static String DEBUG_TAG = "SearchPageDebug";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,11 +91,13 @@ public class SearchPage extends AppCompatActivity implements NavigationView.OnNa
     public void searchButtonHandler(View view) {
 //        final Intent res = new Intent(this, MapsActivity.class);
 //        startActivity(res);
+        uploadSearchQueryToFireBase();
         getBuses();
     }
 
     /**
      * for "SEE MAP" Button, go to google map API
+     *
      * @param view Current view.
      */
     public void go_to_map(View view) {
@@ -142,8 +152,64 @@ public class SearchPage extends AppCompatActivity implements NavigationView.OnNa
         else {
             Toast.makeText(this, "invalid inputs", Toast.LENGTH_SHORT).show();
         }
+        final String errorMSG = "Please enter a valid stop number.";
+
+//        // If search bar is empty, exit function with message.
+//        if (stopNumber.getText().toString().isEmpty()) {
+//            final Toast t = Toast.makeText(getApplicationContext(), errorMSG, Toast.LENGTH_LONG);
+//            t.show();
+//            return;
+//        }
+//        // If the search term is not a valid integer, exit function with message.
+//        try {
+//            Integer.parseInt(stopNo);
+//            // SUCCESS: The search term is a valid integer.
+//            // Set the tempURL and proceed.
+//            tempURL = url + "?apikey=" + appId + "&stopNo=" + stopNo;
+//        } catch (NumberFormatException e) {
+//            // FAILURE: The search term is not a valid integer.
+//            final Toast t = Toast.makeText(getApplicationContext(), errorMSG, Toast.LENGTH_LONG);
+//            t.show();
+//        }
         AsyncTaskRunner runner = new AsyncTaskRunner();
         runner.execute(tempURL);
+    }
+
+    /**
+     * If the user is logged in,
+     * uploads the user's search query
+     * onto the realtime database search history.
+     */
+    private void uploadSearchQueryToFireBase() {
+        Log.d(DEBUG_TAG, "Running: uploadSearchQueryToFireBase()");
+
+        // If the user is logged in, upload their query into the realtime database.
+        // Else, do nothing.
+        firebaseAuth = FirebaseAuth.getInstance();
+        final FirebaseUser user = firebaseAuth.getCurrentUser();
+        if (user != null) {
+            Log.d(DEBUG_TAG, "User is logged in. Saving search query...");
+            DatabaseReference db = FirebaseDatabase.getInstance().getReference();
+
+            // Keys for the database.
+            final String USERS_KEY = "users";
+            final String SEARCH_HISTORY_KEY = "search_history";
+
+            // The search query.
+            final String SEARCH_QUERY = "";
+
+            // Push to the Firebase Realtime Database.
+            db
+                    .child(USERS_KEY) // The "users" tree.
+                    .child(user.getUid()) // The user UID.
+                    .child(SEARCH_HISTORY_KEY) // The "search_history" tree.
+                    .push();
+
+            Log.d(DEBUG_TAG, "Search query saved.");
+        }
+
+        Log.d(DEBUG_TAG, "User is not logged in. Exiting function...");
+
     }
 
     private class AsyncTaskRunner extends AsyncTask<String, Void, String> {
@@ -159,6 +225,7 @@ public class SearchPage extends AppCompatActivity implements NavigationView.OnNa
 
                             JSONObject busesObj = jsonObject.getJSONObject("Buses");
                             JSONArray bus = busesObj.getJSONArray("Bus");
+
                             for (int i = 0; i < bus.length(); i++) {
                                 String time = bus.getJSONObject(i).getString("RecordedTime");
                                 String destination = bus.getJSONObject(i).getString("Destination");
@@ -203,10 +270,12 @@ public class SearchPage extends AppCompatActivity implements NavigationView.OnNa
             queue.add(stringRequest);
             return null;
         }
+
         @Override
         protected void onPostExecute(String bitmap) {
             //super.onPostExecute(bitmap);
 
         }
+
     }
 }
