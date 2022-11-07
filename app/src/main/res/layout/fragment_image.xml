@@ -25,7 +25,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="184dp"
         android:contentDescription="@string/locationTemp"
-        android:src="@drawable/land"
+        android:src="@drawable/translink_bus_image"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"

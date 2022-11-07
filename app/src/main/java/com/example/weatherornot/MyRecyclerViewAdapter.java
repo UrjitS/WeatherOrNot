@@ -16,14 +16,19 @@ import java.util.ArrayList;
 public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAdapter.MyViewHolder> {
 
     Context c;
-    ArrayList<String> planets, introductions;
+    ArrayList<String> destination, times, pattern, routeNo, bDirection;
     int[] images;
     private ItemClickListener clickListener;
 
-    public MyRecyclerViewAdapter(Context c, ArrayList<String> planets, ArrayList<String> introductions, int[] images) {
+    public MyRecyclerViewAdapter(Context c, ArrayList<String> dest,
+                                 ArrayList<String> time, ArrayList<String> pat,
+                                 ArrayList<String> route, ArrayList<String> direction, int[] images) {
         this.c = c;
-        this.planets = planets;
-        this.introductions = introductions;
+        this.destination = dest;
+        this.times = time;
+        this.pattern = pat;
+        this.routeNo = route;
+        this.bDirection = direction;
         this.images = images;
     }
 
@@ -37,8 +42,11 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
-        holder.text1.setText(planets.get(position));
-        holder.text2.setText(introductions.get(position));
+        holder.text1.setText(destination.get(position));
+        holder.text2.setText(times.get(position));
+        holder.text3.setText(pattern.get(position));
+        holder.text4.setText(routeNo.get(position));
+        holder.text5.setText(bDirection.get(position));
         holder.image.setImageResource(images[position]);
     }
 
@@ -53,12 +61,15 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
 
     public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-        TextView text1, text2;
+        TextView text1, text2, text3, text4, text5;
         ImageView image;
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
-            text1 = itemView.findViewById(R.id.planet);
-            text2 = itemView.findViewById(R.id.introduction);
+            text1 = itemView.findViewById(R.id.MyRowDestination);
+            text2 = itemView.findViewById(R.id.MyRowTime);
+            text3 = itemView.findViewById(R.id.MyRowPattern);
+            text4 = itemView.findViewById(R.id.MyRowRouteNum);
+            text5 = itemView.findViewById(R.id.myRowVehicleNumber);
             image = itemView.findViewById(R.id.imageView);
             itemView.setOnClickListener(this);
 //            image.setOnClickListener(this);

@@ -8,7 +8,6 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -42,14 +41,15 @@ public class SearchPage extends AppCompatActivity implements NavigationView.OnNa
     NavigationView navigationView;
     Toolbar toolbar;
     FragmentManager fragmentManager;
-    EditText location;
+    EditText stopNumber, routeNumber;
     private final String url = "https://api.translink.ca/rttiapi/v1/buses";
     private final String appId = "H6I5JajNoTKkm7Ub2Wj0";
-    private final String url2 = "http://api.translink.ca/rttiapi/v1/buses";
-    TextView textView;
     boolean finishedSearch = false;
     private ArrayList<String> busesDestination = new ArrayList<>();
     private ArrayList<String> busesTime = new ArrayList<>();
+    private ArrayList<String> busPattern = new ArrayList<>();
+    private ArrayList<String> busRouteNo = new ArrayList<>();
+    private ArrayList<String> busDirection = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -128,16 +128,19 @@ public class SearchPage extends AppCompatActivity implements NavigationView.OnNa
     }
 
     private void getBuses() {
-        location = findViewById(R.id.searchPage_editTextLocation);
-        textView = findViewById(R.id.result);
-        textView.setText("");
+        stopNumber = findViewById(R.id.searchPageStopNumber);
+        routeNumber = findViewById(R.id.searchRouteNum);
         String tempURL = "";
-        String stopNo = location.getText().toString().trim();
-        if (stopNo.equals("")) {
-            textView.setText("Destination field should not be empty");
-        } else {
-            //tempURL = url2 + "?apikey=" + appId;
+        String stopNo = stopNumber.getText().toString().trim();
+        int routeNo = Integer.parseInt(routeNumber.getText().toString().trim());
+        if (!(stopNo.equals(""))) {
             tempURL = url + "?apikey=" + appId + "&stopNo=" + stopNo;
+        }
+        else if (!(routeNo <= 0)){
+            tempURL = url + "?apikey=" + appId + "&routeNo=" + routeNo;
+        }
+        else {
+            Toast.makeText(this, "invalid inputs", Toast.LENGTH_SHORT).show();
         }
         AsyncTaskRunner runner = new AsyncTaskRunner();
         runner.execute(tempURL);
@@ -159,19 +162,25 @@ public class SearchPage extends AppCompatActivity implements NavigationView.OnNa
                             for (int i = 0; i < bus.length(); i++) {
                                 String time = bus.getJSONObject(i).getString("RecordedTime");
                                 String destination = bus.getJSONObject(i).getString("Destination");
-//                                String pattern = bus.getJSONObject(i).getString("Pattern");
-//                                String routeNo = bus.getJSONObject(i).getString("RouteNo");
-//                                int vehicleNo = bus.getJSONObject(i).getInt("VehicleNo");
+                                String pattern = bus.getJSONObject(i).getString("Pattern");
+                                String routeNo = bus.getJSONObject(i).getString("RouteNo");
+                                String direction = bus.getJSONObject(i).getString("Direction");
                                 busesDestination.add(destination);
                                 busesTime.add(time);
+                                busPattern.add(pattern);
+                                busRouteNo.add(routeNo);
+                                busDirection.add(direction);
                             }
                             Bundle bundle = new Bundle();
                             bundle.putStringArrayList("Destination", busesDestination);
                             bundle.putStringArrayList("Times", busesTime);
-                            Fragment fruit = new ResultsFragment();
-                            fruit.setArguments(bundle);
+                            bundle.putStringArrayList("Pattern", busPattern);
+                            bundle.putStringArrayList("RouteNumber", busRouteNo);
+                            bundle.putStringArrayList("Direction", busDirection);
+                            Fragment results = new ResultsFragment();
+                            results.setArguments(bundle);
                             FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                            fragmentTransaction.replace(R.id.ctnFragment, fruit);
+                            fragmentTransaction.replace(R.id.ctnFragment, results);
                             fragmentTransaction.commit();
 //                            searchButtonHandler();
 //                            Log.d("resp", direction);

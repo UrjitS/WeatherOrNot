@@ -27,7 +27,7 @@
     <string name="start_date">start date</string>
     <string name="end_date">end date</string>
     <string name="search_page_large">Search Page</string>
-    <string name="destination">Please Enter Destination Stop Number</string>
+    <string name="destination">Please provide info below</string>
     <string name="stopNo">Stop Number</string>
 
     <string-array name="weather_types">
@@ -85,6 +85,10 @@
     <string name="introTemp">Temp Weather</string>
     <string name="title_activity_maps">MapsActivity</string>
     <string name="testing_api">testing API</string>
+    <string name="route_number">Route Number</string>
+    <string name="pattern">pattern</string>
+    <string name="temp_route_number">temp route number</string>
+    <string name="vehicle_num">vehicle num</string>
 
 
 </resources>

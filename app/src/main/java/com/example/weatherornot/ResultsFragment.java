@@ -4,8 +4,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.Spinner;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -16,7 +14,7 @@ import java.util.ArrayList;
 public class ResultsFragment extends Fragment implements ItemClickListener {
 
     RecyclerView recyclerView;
-    ArrayList<String> planets, introductions;
+    ArrayList<String> destination, times, busPattern, routeNum, bDirection;
     int[] images;
 
     @Override
@@ -31,15 +29,20 @@ public class ResultsFragment extends Fragment implements ItemClickListener {
         View view = inflater.inflate(R.layout.fragment_gallery, container, false);
         recyclerView = view.findViewById(R.id.recyclerView);
         Bundle b = getArguments();
-        planets = b.getStringArrayList("Destination");
-        introductions = b.getStringArrayList("Times");
+        destination = b.getStringArrayList("Destination");
+        times = b.getStringArrayList("Times");
+        busPattern = b.getStringArrayList("Pattern");
+        routeNum = b.getStringArrayList("RouteNumber");
+        bDirection = b.getStringArrayList("Direction");
 
-        images = new int[planets.size()];
-        for (int i = 0; i < planets.size(); i++) {
-            images[i] = R.drawable.land;
+        images = new int[destination.size()];
+        for (int i = 0; i < destination.size(); i++) {
+            images[i] = R.drawable.translink_bus_image;
         }
 
-        MyRecyclerViewAdapter myRecyclerViewAdapter = new MyRecyclerViewAdapter(getActivity(), planets, introductions, images);
+        MyRecyclerViewAdapter myRecyclerViewAdapter = new
+                MyRecyclerViewAdapter(getActivity(),
+                destination, times, busPattern, routeNum, bDirection, images);
         myRecyclerViewAdapter.setClickListener(this);
         recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
         recyclerView.setAdapter(myRecyclerViewAdapter);
@@ -51,7 +54,11 @@ public class ResultsFragment extends Fragment implements ItemClickListener {
     public void onClick(View view, int position) {
         ImageFragment imageFragment = new ImageFragment();
         Bundle bundle = new Bundle();
-        bundle.putString("planet", planets.get(position));
+        bundle.putString("destination", destination.get(position));
+//        bundle.putString("time", times.get(position));
+//        bundle.putString("pattern", busPattern.get(position));
+//        bundle.putString("routeNum", routeNum.get(position));
+//        bundle.putString("direction", bDirection.get(position));
         bundle.putInt("image", images[position]);
         imageFragment.setArguments(bundle);
         getActivity().getSupportFragmentManager().beginTransaction()
