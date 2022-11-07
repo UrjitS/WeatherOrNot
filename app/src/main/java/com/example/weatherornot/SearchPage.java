@@ -145,13 +145,16 @@ public class SearchPage extends AppCompatActivity implements NavigationView.OnNa
         // 53987
 
         String tempURL = "";
-        String stopNo = stopNumber.getText().toString().trim();
+
+        // Stop and Route Strings.
+        final String stopNo = stopNumber.getText().toString().trim();
+        final String routeNo = routeNumber.getText().toString().trim();
 
         // Error messages.
         final String errorMSGStop = "Please enter a valid stop number.";
         final String errorMSGRoute = "Please enter a valid route number.";
 
-        if (!stopNumber.getText().toString().isEmpty()) {
+        if (!stopNo.isEmpty()) {
             // If the search term is not a valid integer, exit function with message.
             try {
                 Integer.parseInt(stopNo);
@@ -166,10 +169,10 @@ public class SearchPage extends AppCompatActivity implements NavigationView.OnNa
             }
         }
 
-        if (!routeNumber.getText().toString().isEmpty()) {
+        if (!routeNo.isEmpty()) {
             // If the search term is not a valid integer, exit function with message.
             try {
-                Integer.parseInt(stopNo);
+                Integer.parseInt(routeNo);
                 // SUCCESS: The search term is a valid integer.
                 // Set the tempURL and proceed.
                 tempURL = url + "?apikey=" + appId + "&routeNo=" + stopNo;
@@ -283,7 +286,11 @@ public class SearchPage extends AppCompatActivity implements NavigationView.OnNa
                         } catch (JSONException e) {
                             e.getMessage();
                         }
-                    }, error -> Log.d("resp", "hello"));
+                    }, error -> {
+                Log.d("resp", "hello");
+                Toast t = Toast.makeText(getApplicationContext(), "Error.", Toast.LENGTH_SHORT);
+                t.show();
+            });
 
             queue.add(stringRequest);
             return null;
