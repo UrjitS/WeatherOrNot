@@ -142,17 +142,24 @@ public class SearchPage extends AppCompatActivity implements NavigationView.OnNa
         routeNumber = findViewById(R.id.searchRouteNum);
         String tempURL = "";
         String stopNo = stopNumber.getText().toString().trim();
-        int routeNo = Integer.parseInt(routeNumber.getText().toString().trim());
-        if (!(stopNo.equals(""))) {
-            tempURL = url + "?apikey=" + appId + "&stopNo=" + stopNo;
-        }
-        else if (!(routeNo <= 0)){
-            tempURL = url + "?apikey=" + appId + "&routeNo=" + routeNo;
-        }
-        else {
-            Toast.makeText(this, "invalid inputs", Toast.LENGTH_SHORT).show();
-        }
-        final String errorMSG = "Please enter a valid stop number.";
+        try {
+            if (!(stopNo.equals(""))) {
+                tempURL = url + "?apikey=" + appId + "&stopNo=" + stopNo;
+                AsyncTaskRunner runner = new AsyncTaskRunner();
+                runner.execute(tempURL);
+                return;
+            }
+            int routeNo = Integer.parseInt(routeNumber.getText().toString().trim());
+            if (!(routeNo <= 0)){
+                tempURL = url + "?apikey=" + appId + "&routeNo=" + routeNo;
+                AsyncTaskRunner runner = new AsyncTaskRunner();
+                runner.execute(tempURL);
+                return;
+            }
+            else {
+                Toast.makeText(this, "invalid inputs", Toast.LENGTH_SHORT).show();
+            }
+            final String errorMSG = "Please enter a valid stop number.";
 
 //        // If search bar is empty, exit function with message.
 //        if (stopNumber.getText().toString().isEmpty()) {
@@ -171,8 +178,12 @@ public class SearchPage extends AppCompatActivity implements NavigationView.OnNa
 //            final Toast t = Toast.makeText(getApplicationContext(), errorMSG, Toast.LENGTH_LONG);
 //            t.show();
 //        }
-        AsyncTaskRunner runner = new AsyncTaskRunner();
-        runner.execute(tempURL);
+//            AsyncTaskRunner runner = new AsyncTaskRunner();
+//            runner.execute(tempURL);
+        } catch (NumberFormatException exception) {
+            Toast.makeText(this, "invalid inputs", Toast.LENGTH_SHORT).show();
+        }
+
     }
 
     /**
@@ -215,6 +226,12 @@ public class SearchPage extends AppCompatActivity implements NavigationView.OnNa
     private class AsyncTaskRunner extends AsyncTask<String, Void, String> {
         @Override
         protected String doInBackground(String... strings) {
+            busesDestination = new ArrayList<>();
+            busesTime = new ArrayList<>();
+            busPattern = new ArrayList<>();
+            busRouteNo = new ArrayList<>();
+            busDirection = new ArrayList<>();
+
             RequestQueue queue = Volley.newRequestQueue(SearchPage.this);
             StringRequest stringRequest = new StringRequest(Request.Method.GET, strings[0],
                     response -> {
