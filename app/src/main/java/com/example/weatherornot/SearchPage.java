@@ -26,6 +26,7 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -58,7 +59,8 @@ public class SearchPage extends AppCompatActivity implements NavigationView.OnNa
     private final ArrayList<String> busesTime = new ArrayList<>();
 
     FirebaseAuth firebaseAuth;
-    public final static String DEBUG_TAG = "SearchPage";
+
+    public final static String DEBUG_TAG = "SearchPageDebug";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -92,6 +94,7 @@ public class SearchPage extends AppCompatActivity implements NavigationView.OnNa
     public void searchButtonHandler(View view) {
 //        final Intent res = new Intent(this, MapsActivity.class);
 //        startActivity(res);
+        uploadSearchQueryToFireBase();
         getBuses();
     }
 
@@ -139,18 +142,69 @@ public class SearchPage extends AppCompatActivity implements NavigationView.OnNa
 
     private void getBuses() {
         location = findViewById(R.id.searchPage_editTextLocation);
-        textView = findViewById(R.id.result);
-        textView.setText("");
-        String tempURL = "";
-        String stopNo = location.getText().toString().trim();
-        if (stopNo.equals("")) {
-            textView.setText("Destination field should not be empty");
-        } else {
-            //tempURL = url2 + "?apikey=" + appId;
-            tempURL = url + "?apikey=" + appId + "&stopNo=" + stopNo;
+        final String errorMSG = "Please enter a valid stop number.";
+
+        // If search bar is empty, exit function with message.
+        if (location.getText().toString().isEmpty()) {
+            final Toast t = Toast.makeText(getApplicationContext(), errorMSG, Toast.LENGTH_LONG);
+            t.show();
+            return;
         }
+
+        String tempURL = "";
+        final String stopNo = location.getText().toString().trim();
+
+        // If the search term is not a valid integer, exit function with message.
+        try {
+            Integer.parseInt(stopNo);
+            // SUCCESS: The search term is a valid integer.
+            // Set the tempURL and proceed.
+            tempURL = url + "?apikey=" + appId + "&stopNo=" + stopNo;
+        } catch (NumberFormatException e) {
+            // FAILURE: The search term is not a valid integer.
+            final Toast t = Toast.makeText(getApplicationContext(), errorMSG, Toast.LENGTH_LONG);
+            t.show();
+        }
+
         AsyncTaskRunner runner = new AsyncTaskRunner();
         runner.execute(tempURL);
+    }
+
+    /**
+     * If the user is logged in,
+     * uploads the user's search query
+     * onto the realtime database search history.
+     */
+    private void uploadSearchQueryToFireBase() {
+        Log.d(DEBUG_TAG, "Running: uploadSearchQueryToFireBase()");
+
+        // If the user is logged in, upload their query into the realtime database.
+        // Else, do nothing.
+        firebaseAuth = FirebaseAuth.getInstance();
+        final FirebaseUser user = firebaseAuth.getCurrentUser();
+        if (user != null) {
+            Log.d(DEBUG_TAG, "User is logged in. Saving search query...");
+            DatabaseReference db = FirebaseDatabase.getInstance().getReference();
+
+            // Keys for the database.
+            final String USERS_KEY = "users";
+            final String SEARCH_HISTORY_KEY = "search_history";
+
+            // The search query.
+            final String SEARCH_QUERY = "";
+
+            // Push to the Firebase Realtime Database.
+            db
+                    .child(USERS_KEY) // The "users" tree.
+                    .child(user.getUid()) // The user UID.
+                    .child(SEARCH_HISTORY_KEY) // The "search_history" tree.
+                    .push();
+
+            Log.d(DEBUG_TAG, "Search query saved.");
+        }
+
+        Log.d(DEBUG_TAG, "User is not logged in. Exiting function...");
+
     }
 
     private class AsyncTaskRunner extends AsyncTask<String, Void, String> {
@@ -209,42 +263,6 @@ public class SearchPage extends AppCompatActivity implements NavigationView.OnNa
         @Override
         protected void onPostExecute(String bitmap) {
             //super.onPostExecute(bitmap);
-
-        }
-
-        /**
-         * If the user is logged in,
-         * uploads the user's search query
-         * onto the realtime database search history.
-         */
-        private void uploadSearchQueryToFireBase() {
-            Log.d(DEBUG_TAG, "Running: uploadSearchQueryToFireBase()");
-
-            // If the user is logged in, upload their query into the realtime database.
-            // Else, do nothing.
-            final FirebaseUser user = firebaseAuth.getCurrentUser();
-            if (user != null) {
-                Log.d(DEBUG_TAG, "User is logged in. Saving search query...");
-                DatabaseReference db = FirebaseDatabase.getInstance().getReference();
-
-                // Keys for the database.
-                final String USERS_KEY = "users";
-                final String SEARCH_HISTORY_KEY = "search_history";
-
-                // The search query.
-                final String SEARCH_QUERY = "";
-
-                // Push to the Firebase Realtime Database.
-                db
-                        .child(USERS_KEY) // The "users" tree.
-                        .child(user.getUid()) // The user UID.
-                        .child(SEARCH_HISTORY_KEY) // The "search_history" tree.
-                        .push();
-
-                Log.d(DEBUG_TAG, "Search query saved.");
-            }
-
-            Log.d(DEBUG_TAG, "User is not logged in.");
 
         }
 
