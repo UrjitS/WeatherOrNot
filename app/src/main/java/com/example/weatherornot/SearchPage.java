@@ -175,7 +175,7 @@ public class SearchPage extends AppCompatActivity implements NavigationView.OnNa
                 Integer.parseInt(routeNo);
                 // SUCCESS: The search term is a valid integer.
                 // Set the tempURL and proceed.
-                tempURL = url + "?apikey=" + appId + "&routeNo=" + stopNo;
+                tempURL = url + "?apikey=" + appId + "&routeNo=" + routeNo;
             } catch (NumberFormatException e) {
                 // FAILURE: The search term is not a valid integer.
                 final Toast t = Toast.makeText(getApplicationContext(), errorMSGRoute, Toast.LENGTH_LONG);
