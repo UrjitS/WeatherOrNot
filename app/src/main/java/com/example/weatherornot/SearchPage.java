@@ -26,7 +26,6 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.google.android.gms.tasks.Task;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -38,7 +37,6 @@ import org.json.JSONObject;
 import org.json.JSONException;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
 import fr.arnaudguyon.xmltojsonlib.XmlToJson;
 
