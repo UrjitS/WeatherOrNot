@@ -28,9 +28,9 @@ public class GoogleMap extends AppCompatActivity implements OnMapReadyCallback {
     @Override
     public void onMapReady(@NonNull com.google.android.gms.maps.GoogleMap googleMap) {
 
-        // Marker test.
-        LatLng comp3717Lecture = new LatLng(49.25010954461797, -123.00275621174804);
-        googleMap.addMarker(new MarkerOptions().position(comp3717Lecture).title("COMP 3717 Lecture"));
+        // Marker test. 49.2477085254479, -123.0038584025334
+        LatLng comp3717Lecture = new LatLng(49.2477085254479, -123.0038584025334);
+        googleMap.addMarker(new MarkerOptions().position(comp3717Lecture).title("Stop ID: 52740"));
         googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(comp3717Lecture, 15));
     }
 }
