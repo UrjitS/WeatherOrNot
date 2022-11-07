@@ -126,7 +126,7 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <EditText
-        android:id="@+id/searchRouteNum"
+        android:id="@+id/searchPageRouteNumber"
         android:layout_width="wrap_content"
         android:layout_height="48dp"
         android:layout_marginBottom="400dp"

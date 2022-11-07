@@ -138,31 +138,50 @@ public class SearchPage extends AppCompatActivity implements NavigationView.OnNa
     }
 
     private void getBuses() {
+        // TextViews.
         stopNumber = findViewById(R.id.searchPageStopNumber);
-        routeNumber = findViewById(R.id.searchRouteNum);
+        routeNumber = findViewById(R.id.searchPageRouteNumber);
+
+        // 53987
+
         String tempURL = "";
         String stopNo = stopNumber.getText().toString().trim();
 
+        // Error messages.
+        final String errorMSGStop = "Please enter a valid stop number.";
+        final String errorMSGRoute = "Please enter a valid route number.";
 
-        final String errorMSG = "Please enter a valid stop number.";
+        if (!stopNumber.getText().toString().isEmpty()) {
+            // If the search term is not a valid integer, exit function with message.
+            try {
+                Integer.parseInt(stopNo);
+                // SUCCESS: The search term is a valid integer.
+                // Set the tempURL and proceed.
+                tempURL = url + "?apikey=" + appId + "&stopNo=" + stopNo;
+            } catch (NumberFormatException e) {
+                // FAILURE: The search term is not a valid integer.
+                final Toast t = Toast.makeText(getApplicationContext(), errorMSGStop, Toast.LENGTH_LONG);
+                t.show();
+                return;
+            }
+        }
 
-        // If search bar is empty, exit function with message.
-        if (stopNumber.getText().toString().isEmpty()) {
-            final Toast t = Toast.makeText(getApplicationContext(), errorMSG, Toast.LENGTH_LONG);
-            t.show();
-            return;
+        if (!routeNumber.getText().toString().isEmpty()) {
+            // If the search term is not a valid integer, exit function with message.
+            try {
+                Integer.parseInt(stopNo);
+                // SUCCESS: The search term is a valid integer.
+                // Set the tempURL and proceed.
+                tempURL = url + "?apikey=" + appId + "&routeNo=" + stopNo;
+            } catch (NumberFormatException e) {
+                // FAILURE: The search term is not a valid integer.
+                final Toast t = Toast.makeText(getApplicationContext(), errorMSGRoute, Toast.LENGTH_LONG);
+                t.show();
+                return;
+            }
         }
-        // If the search term is not a valid integer, exit function with message.
-        try {
-            Integer.parseInt(stopNo);
-            // SUCCESS: The search term is a valid integer.
-            // Set the tempURL and proceed.
-            tempURL = url + "?apikey=" + appId + "&stopNo=" + stopNo;
-        } catch (NumberFormatException e) {
-            // FAILURE: The search term is not a valid integer.
-            final Toast t = Toast.makeText(getApplicationContext(), errorMSG, Toast.LENGTH_LONG);
-            t.show();
-        }
+
+
         AsyncTaskRunner runner = new AsyncTaskRunner();
         runner.execute(tempURL);
 
