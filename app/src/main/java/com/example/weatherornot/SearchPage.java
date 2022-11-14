@@ -46,13 +46,14 @@ public class SearchPage extends AppCompatActivity implements NavigationView.OnNa
     FragmentManager fragmentManager;
     EditText stopNumber, routeNumber;
     private final String url = "https://api.translink.ca/rttiapi/v1/buses";
+    private final String estimatesUrl = "https://api.translink.ca/rttiapi/v1/stops";
     private final String appId = "H6I5JajNoTKkm7Ub2Wj0";
     boolean finishedSearch = false;
     private ArrayList<String> busesDestination = new ArrayList<>();
     private ArrayList<String> busesTime = new ArrayList<>();
     private ArrayList<String> busPattern = new ArrayList<>();
-    private ArrayList<String> busRouteNo = new ArrayList<>();
-    private ArrayList<String> busDirection = new ArrayList<>();
+    private ArrayList<String> busLastUpdate = new ArrayList<>();
+//    private ArrayList<String> busDirection = new ArrayList<>();
 
 
     FirebaseAuth firebaseAuth;
@@ -145,37 +146,22 @@ public class SearchPage extends AppCompatActivity implements NavigationView.OnNa
         // 53987
 
         String tempURL = "";
-
-        // Stop and Route Strings.
-        final String stopNo = stopNumber.getText().toString().trim();
-        final String routeNo = routeNumber.getText().toString().trim();
+        String stopNo  = stopNumber.getText().toString().trim();
+        String routeNo = routeNumber.getText().toString().trim();
 
         // Error messages.
         final String errorMSGStop = "Please enter a valid stop number.";
         final String errorMSGRoute = "Please enter a valid route number.";
 
-        if (!stopNo.isEmpty()) {
+        if (!stopNumber.getText().toString().isEmpty() && !routeNumber.getText().toString().isEmpty()) {
             // If the search term is not a valid integer, exit function with message.
             try {
                 Integer.parseInt(stopNo);
+                //Integer.parseInt(routeNo);
                 // SUCCESS: The search term is a valid integer.
                 // Set the tempURL and proceed.
-                tempURL = url + "?apikey=" + appId + "&stopNo=" + stopNo;
-            } catch (NumberFormatException e) {
-                // FAILURE: The search term is not a valid integer.
-                final Toast t = Toast.makeText(getApplicationContext(), errorMSGStop, Toast.LENGTH_LONG);
-                t.show();
-                return;
-            }
-        }
-
-        if (!routeNo.isEmpty()) {
-            // If the search term is not a valid integer, exit function with message.
-            try {
-                Integer.parseInt(routeNo);
-                // SUCCESS: The search term is a valid integer.
-                // Set the tempURL and proceed.
-                tempURL = url + "?apikey=" + appId + "&routeNo=" + routeNo;
+                // https://api.translink.ca/rttiapi/v1/stops/60980/estimates
+                tempURL = estimatesUrl + "/" + stopNo + "/estimates?apikey=" + appId + "&routeNo=" + routeNo;
             } catch (NumberFormatException e) {
                 // FAILURE: The search term is not a valid integer.
                 final Toast t = Toast.makeText(getApplicationContext(), errorMSGRoute, Toast.LENGTH_LONG);
@@ -184,6 +170,20 @@ public class SearchPage extends AppCompatActivity implements NavigationView.OnNa
             }
         }
 
+        else if (!stopNumber.getText().toString().isEmpty() && routeNumber.getText().toString().isEmpty()) {
+            // If the search term is not a valid integer, exit function with message.
+            try {
+                Integer.parseInt(stopNo);
+                // SUCCESS: The search term is a valid integer.
+                // Set the tempURL and proceed.
+                tempURL = estimatesUrl + "/" + stopNo + "/estimates?apikey=" + appId;
+            } catch (NumberFormatException e) {
+                // FAILURE: The search term is not a valid integer.
+                final Toast t = Toast.makeText(getApplicationContext(), errorMSGRoute, Toast.LENGTH_LONG);
+                t.show();
+                return;
+            }
+        }
 
         AsyncTaskRunner runner = new AsyncTaskRunner();
         runner.execute(tempURL);
@@ -233,8 +233,8 @@ public class SearchPage extends AppCompatActivity implements NavigationView.OnNa
             busesDestination = new ArrayList<>();
             busesTime = new ArrayList<>();
             busPattern = new ArrayList<>();
-            busRouteNo = new ArrayList<>();
-            busDirection = new ArrayList<>();
+            busLastUpdate = new ArrayList<>();
+//            busDirection = new ArrayList<>();
 
             RequestQueue queue = Volley.newRequestQueue(SearchPage.this);
             StringRequest stringRequest = new StringRequest(Request.Method.GET, strings[0],
@@ -244,27 +244,31 @@ public class SearchPage extends AppCompatActivity implements NavigationView.OnNa
                             JSONObject jsonObject = xmlToJson.toJson();
                             Log.d("resp", String.valueOf(jsonObject));
 
-                            JSONObject busesObj = jsonObject.getJSONObject("Buses");
-                            JSONArray bus = busesObj.getJSONArray("Bus");
+                            JSONObject busesObj = jsonObject.getJSONObject("NextBuses");
+                            JSONObject nextBusObj = busesObj.getJSONObject("NextBus");
+                            JSONObject schedulesObj = nextBusObj.getJSONObject("Schedules");
+                            JSONArray busScheduleObj = schedulesObj.getJSONArray("Schedule");
 
-                            for (int i = 0; i < bus.length(); i++) {
-                                String time = bus.getJSONObject(i).getString("RecordedTime");
-                                String destination = bus.getJSONObject(i).getString("Destination");
-                                String pattern = bus.getJSONObject(i).getString("Pattern");
-                                String routeNo = bus.getJSONObject(i).getString("RouteNo");
-                                String direction = bus.getJSONObject(i).getString("Direction");
+                            for (int i = 0; i < busScheduleObj.length(); i++) {
+                                System.out.println("for loop");
+                                String destination = busScheduleObj.getJSONObject(i).getString("Destination");
+                                String expectedLeaveTime = busScheduleObj.getJSONObject(i).getString("ExpectedLeaveTime");
+                                String lastTimeUpdate = busScheduleObj.getJSONObject(i).getString("LastUpdate");
+                                String pattern = busScheduleObj.getJSONObject(i).getString("Pattern");
+//                                String routeNo = busScheduleObj.getJSONObject(i).getString("RouteNo");
+//                                String direction = busScheduleObj.getJSONObject(i).getString("Direction");
                                 busesDestination.add(destination);
-                                busesTime.add(time);
+                                busesTime.add(expectedLeaveTime);
                                 busPattern.add(pattern);
-                                busRouteNo.add(routeNo);
-                                busDirection.add(direction);
+                                busLastUpdate.add(lastTimeUpdate);
+//                                busDirection.add(direction);
                             }
                             Bundle bundle = new Bundle();
                             bundle.putStringArrayList("Destination", busesDestination);
                             bundle.putStringArrayList("Times", busesTime);
                             bundle.putStringArrayList("Pattern", busPattern);
-                            bundle.putStringArrayList("RouteNumber", busRouteNo);
-                            bundle.putStringArrayList("Direction", busDirection);
+                            bundle.putStringArrayList("LastUpdate", busLastUpdate);
+//                            bundle.putStringArrayList("Direction", busDirection);
                             Fragment results = new ResultsFragment();
                             results.setArguments(bundle);
                             FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
@@ -286,11 +290,7 @@ public class SearchPage extends AppCompatActivity implements NavigationView.OnNa
                         } catch (JSONException e) {
                             e.getMessage();
                         }
-                    }, error -> {
-                Log.d("resp", "hello");
-                Toast t = Toast.makeText(getApplicationContext(), "Error.", Toast.LENGTH_SHORT);
-                t.show();
-            });
+                    }, error -> Log.d("resp", "hello"));
 
             queue.add(stringRequest);
             return null;

@@ -16,19 +16,18 @@ import java.util.ArrayList;
 public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAdapter.MyViewHolder> {
 
     Context c;
-    ArrayList<String> destination, times, pattern, routeNo, bDirection;
+    ArrayList<String> destination, times, pattern, bLastUpdate;
     int[] images;
     private ItemClickListener clickListener;
 
     public MyRecyclerViewAdapter(Context c, ArrayList<String> dest,
                                  ArrayList<String> time, ArrayList<String> pat,
-                                 ArrayList<String> route, ArrayList<String> direction, int[] images) {
+                                 ArrayList<String> lastUpd, int[] images) {
         this.c = c;
         this.destination = dest;
         this.times = time;
         this.pattern = pat;
-        this.routeNo = route;
-        this.bDirection = direction;
+        this.bLastUpdate = lastUpd;
         this.images = images;
     }
 
@@ -45,8 +44,8 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
         holder.text1.setText(destination.get(position));
         holder.text2.setText(times.get(position));
         holder.text3.setText(pattern.get(position));
-        holder.text4.setText(routeNo.get(position));
-        holder.text5.setText(bDirection.get(position));
+        holder.text4.setText(bLastUpdate.get(position));
+//        holder.text5.setText(bLastUpdate.get(position));
         holder.image.setImageResource(images[position]);
     }
 
@@ -69,7 +68,7 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
             text2 = itemView.findViewById(R.id.MyRowTime);
             text3 = itemView.findViewById(R.id.MyRowPattern);
             text4 = itemView.findViewById(R.id.MyRowRouteNum);
-            text5 = itemView.findViewById(R.id.myRowVehicleNumber);
+//            text5 = itemView.findViewById(R.id.myRowVehicleNumber);
             image = itemView.findViewById(R.id.imageView);
             itemView.setOnClickListener(this);
 //            image.setOnClickListener(this);

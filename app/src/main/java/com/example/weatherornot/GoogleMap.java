@@ -11,6 +11,8 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import java.util.ArrayList;
+
 public class GoogleMap extends AppCompatActivity implements OnMapReadyCallback {
 
     SupportMapFragment mapFragment;
@@ -22,12 +24,10 @@ public class GoogleMap extends AppCompatActivity implements OnMapReadyCallback {
 
         mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.mapAPI);
         mapFragment.getMapAsync(this);
-
     }
 
     @Override
     public void onMapReady(@NonNull com.google.android.gms.maps.GoogleMap googleMap) {
-
         // Marker test. 49.2477085254479, -123.0038584025334
         LatLng comp3717Lecture = new LatLng(49.2477085254479, -123.0038584025334);
         googleMap.addMarker(new MarkerOptions().position(comp3717Lecture).title("Stop ID: 52740"));

@@ -14,7 +14,7 @@ import java.util.ArrayList;
 public class ResultsFragment extends Fragment implements ItemClickListener {
 
     RecyclerView recyclerView;
-    ArrayList<String> destination, times, busPattern, routeNum, bDirection;
+    ArrayList<String> destination, times, busPattern, bLastUpdate;
     int[] images;
 
     @Override
@@ -32,8 +32,8 @@ public class ResultsFragment extends Fragment implements ItemClickListener {
         destination = b.getStringArrayList("Destination");
         times = b.getStringArrayList("Times");
         busPattern = b.getStringArrayList("Pattern");
-        routeNum = b.getStringArrayList("RouteNumber");
-        bDirection = b.getStringArrayList("Direction");
+//        routeNum = b.getStringArrayList("RouteNumber");
+        bLastUpdate = b.getStringArrayList("LastUpdate");
 
         images = new int[destination.size()];
         for (int i = 0; i < destination.size(); i++) {
@@ -42,7 +42,7 @@ public class ResultsFragment extends Fragment implements ItemClickListener {
 
         MyRecyclerViewAdapter myRecyclerViewAdapter = new
                 MyRecyclerViewAdapter(getActivity(),
-                destination, times, busPattern, routeNum, bDirection, images);
+                destination, times, busPattern, bLastUpdate, images);
         myRecyclerViewAdapter.setClickListener(this);
         recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
         recyclerView.setAdapter(myRecyclerViewAdapter);
@@ -55,9 +55,9 @@ public class ResultsFragment extends Fragment implements ItemClickListener {
         ImageFragment imageFragment = new ImageFragment();
         Bundle bundle = new Bundle();
         bundle.putString("destination", destination.get(position));
-//        bundle.putString("time", times.get(position));
-//        bundle.putString("pattern", busPattern.get(position));
-//        bundle.putString("routeNum", routeNum.get(position));
+        bundle.putString("time", times.get(position));
+        bundle.putString("pattern", busPattern.get(position));
+        bundle.putString("lastUpdate", bLastUpdate.get(position));
 //        bundle.putString("direction", bDirection.get(position));
         bundle.putInt("image", images[position]);
         imageFragment.setArguments(bundle);

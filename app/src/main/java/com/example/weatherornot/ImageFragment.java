@@ -11,18 +11,21 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.weatherornot.ResultsFragment;
+import org.w3c.dom.Text;
 
 public class ImageFragment extends Fragment {
 
-    private String planet;
+    private String destination, recTime, patternVal, lastUpd;
     private int imageId;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            planet = getArguments().getString("planet");
+            destination = getArguments().getString("destination");
+            recTime = getArguments().getString("time");
+            patternVal = getArguments().getString("pattern");
+            lastUpd = getArguments().getString("lastUpdate");
             imageId = getArguments().getInt("image");
         }
     }
@@ -32,11 +35,18 @@ public class ImageFragment extends Fragment {
                              Bundle savedInstanceState) {
         View myView = inflater.inflate(R.layout.fragment_image, container, false);
 //        View myView = inflater.inflate(R.layout.fragment_frame_layout, container, false);
-        TextView locName = myView.findViewById(R.id.planetName);
-        locName.setText(planet);
-        TextView currentWeather = myView.findViewById(R.id.temperature);
-        String weth = "Current Temperature 12 degrees";
-        currentWeather.setText(weth);
+        TextView locName = myView.findViewById(R.id.destinationName);
+        locName.setText(destination);
+
+        TextView recordedTime = myView.findViewById(R.id.recordedTime);
+        recordedTime.setText(recTime);
+
+        TextView pattern = myView.findViewById(R.id.patternVal);
+        pattern.setText(patternVal);
+
+        TextView lastUpdatedTime = myView.findViewById(R.id.lastUpdateVal);
+        lastUpdatedTime.setText(lastUpd);
+
         ImageView imageView = myView.findViewById(R.id.planetImage);
         imageView.setImageResource(imageId);
 

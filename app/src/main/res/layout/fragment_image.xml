@@ -7,17 +7,17 @@
     tools:context=".ImageFragment">
 
     <TextView
-        android:id="@+id/planetName"
+        android:id="@+id/destinationName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/imageTemp"
-        android:textSize="20sp"
+        android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.468"
+        app:layout_constraintHorizontal_bias="0.469"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.126" />
+        app:layout_constraintVertical_bias="0.042" />
 
     <ImageView
         android:id="@+id/planetImage"
@@ -28,12 +28,13 @@
         android:src="@drawable/translink_bus_image"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/planetName" />
+        app:layout_constraintTop_toBottomOf="@+id/destinationName"
+        app:layout_constraintVertical_bias="0.341" />
 
     <TextView
-        android:id="@+id/temperature"
+        android:id="@+id/recordedTime"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/imageTemp"
@@ -42,7 +43,32 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.801" />
+        app:layout_constraintVertical_bias="0.735" />
+
+
+    <TextView
+        android:id="@+id/patternVal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/imageTemp"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.791" />
+
+    <TextView
+        android:id="@+id/lastUpdateVal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/imageTemp"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.850" />
 
     <Button
         android:id="@+id/btnBack"
@@ -56,14 +82,15 @@
         app:layout_constraintTop_toBottomOf="@+id/planetImage"
         app:layout_constraintVertical_bias="1.0" />
 
-    <RatingBar
+    <!--<RatingBar
         android:id="@+id/ratingBar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="96dp"
         android:contentDescription="@string/app_name"
-        app:layout_constraintBottom_toTopOf="@+id/planetName"
+        app:layout_constraintBottom_toTopOf="@+id/destinationName"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-
+-->
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -111,34 +111,6 @@
     <!--        app:layout_constraintStart_toStartOf="parent"-->
     <!--        app:layout_constraintTop_toBottomOf="@+id/searchPage_editTextNumber_temperatureFrom" />-->
 
-    <EditText
-        android:id="@+id/searchPageStopNumber"
-        android:layout_width="wrap_content"
-        android:layout_height="48dp"
-        android:layout_marginBottom="480dp"
-        android:ems="10"
-        android:hint="@string/stopNo"
-        android:importantForAutofill="no"
-        android:inputType="text"
-        android:textColorHint="@color/black"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <EditText
-        android:id="@+id/searchPageRouteNumber"
-        android:layout_width="wrap_content"
-        android:layout_height="48dp"
-        android:layout_marginBottom="400dp"
-        android:ems="10"
-        android:hint="@string/route_number"
-        android:importantForAutofill="no"
-        android:inputType="text"
-        android:textColorHint="@color/black"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
 
     <!--<EditText
         android:id="@+id/searchPage_editTextDate_to"
@@ -156,17 +128,47 @@
         app:layout_constraintTop_toBottomOf="@+id/searchPage_editTextDate" />
 -->
 
+    <EditText
+        android:id="@+id/searchPageStopNumber"
+        android:layout_width="wrap_content"
+        android:layout_height="48dp"
+        android:layout_marginBottom="468dp"
+        android:ems="10"
+        android:hint="@string/stopNo"
+        android:importantForAutofill="no"
+        android:inputType="text"
+        android:textColorHint="@color/black"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.462"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <EditText
+        android:id="@+id/searchPageRouteNumber"
+        android:layout_width="wrap_content"
+        android:layout_height="48dp"
+        android:layout_marginBottom="412dp"
+        android:ems="10"
+        android:hint="@string/route_number"
+        android:importantForAutofill="no"
+        android:inputType="text"
+        android:textColorHint="@color/black"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.462"
+        app:layout_constraintStart_toStartOf="parent" />
+
     <Button
         android:id="@+id/searchPage_button_search"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="280dp"
+        android:layout_marginBottom="316dp"
         android:onClick="searchButtonHandler"
         android:text="@string/search"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.549"
-        app:layout_constraintStart_toStartOf="@id/searchPageStopNumber"
+        app:layout_constraintHorizontal_bias="0.656"
+        app:layout_constraintStart_toStartOf="@id/searchPageRouteNumber"
         tools:ignore="DuplicateSpeakableTextCheck,DuplicateClickableBoundsCheck" />
 
     <Button
@@ -174,13 +176,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="230dp"
-        android:layout_marginBottom="280dp"
+        android:layout_marginBottom="316dp"
         android:onClick="go_to_map"
         android:text="@string/google_map_string"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@id/searchPageStopNumber"
+        app:layout_constraintStart_toStartOf="@id/searchPageRouteNumber"
         tools:ignore="DuplicateSpeakableTextCheck" />
 
     <androidx.fragment.app.FragmentContainerView
@@ -189,6 +191,7 @@
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/recyclerView" />
 
