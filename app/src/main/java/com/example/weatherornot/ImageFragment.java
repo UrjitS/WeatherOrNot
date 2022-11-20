@@ -31,12 +31,8 @@ public class ImageFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View myView = inflater.inflate(R.layout.fragment_image, container, false);
-//        View myView = inflater.inflate(R.layout.fragment_frame_layout, container, false);
         TextView locName = myView.findViewById(R.id.planetName);
         locName.setText(planet);
-        TextView currentWeather = myView.findViewById(R.id.temperature);
-        String weth = "Current Temperature 12 degrees";
-        currentWeather.setText(weth);
         ImageView imageView = myView.findViewById(R.id.planetImage);
         imageView.setImageResource(imageId);
 
@@ -45,8 +41,8 @@ public class ImageFragment extends Fragment {
             Fragment fruit = new SearchFragment();
             getActivity().getSupportFragmentManager().beginTransaction()
                     .setCustomAnimations(
-                            R.anim.fade_in, // popEnter
-                            R.anim.fade_out // exit
+                            R.anim.slide_in_left, // popEnter
+                            R.anim.slide_out_right // exit
                     )
                     .replace(R.id.ctnFragment, fruit)
                     .addToBackStack(null)

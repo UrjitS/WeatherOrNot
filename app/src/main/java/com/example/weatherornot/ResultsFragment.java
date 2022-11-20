@@ -55,17 +55,11 @@ public class ResultsFragment extends Fragment implements ItemClickListener {
         ImageFragment imageFragment = new ImageFragment();
         Bundle bundle = new Bundle();
         bundle.putString("destination", destination.get(position));
-//        bundle.putString("time", times.get(position));
-//        bundle.putString("pattern", busPattern.get(position));
-//        bundle.putString("routeNum", routeNum.get(position));
-//        bundle.putString("direction", bDirection.get(position));
         bundle.putInt("image", images[position]);
         imageFragment.setArguments(bundle);
         getActivity().getSupportFragmentManager().beginTransaction()
 //                .setCustomAnimations(
 //                        R.anim.slide_in_right, // enter
-//                        R.anim.fade_out, // exit
-//                        R.anim.fade_in, // popEnter
 //                        R.anim.slide_out_right // popExit
 //                )
                 .replace(R.id.ctnFragment, imageFragment)
