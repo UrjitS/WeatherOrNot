@@ -151,6 +151,7 @@ public class SearchPage extends AppCompatActivity implements NavigationView.OnNa
         final String errorMSGStop = "Please enter a valid stop number.";
         final String errorMSGRoute = "Please enter a valid route number.";
 
+        // Error checking for STOPS.
         if (!stopNumber.getText().toString().isEmpty() && !routeNumber.getText().toString().isEmpty()) {
             // If the search term is not a valid integer, exit function with message.
             try {
@@ -162,12 +163,13 @@ public class SearchPage extends AppCompatActivity implements NavigationView.OnNa
                 tempURL = ESTIMATES_URL + "/" + stopNo + "/estimates?apikey=" + APP_ID + "&routeNo=" + routeNo;
             } catch (NumberFormatException e) {
                 // FAILURE: The search term is not a valid integer.
-                final Toast t = Toast.makeText(getApplicationContext(), errorMSGRoute, Toast.LENGTH_LONG);
+                final Toast t = Toast.makeText(getApplicationContext(), errorMSGStop, Toast.LENGTH_LONG);
                 t.show();
                 return;
             }
         }
 
+        // Error checking for ROUTES.
         else if (!stopNumber.getText().toString().isEmpty() && routeNumber.getText().toString().isEmpty()) {
             // If the search term is not a valid integer, exit function with message.
             try {
