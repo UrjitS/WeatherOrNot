@@ -1,0 +1,44 @@
+Index: app/src/main/java/com/example/weatherornot/SearchFragment.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.example.weatherornot;\r\n\r\nimport android.os.Bundle;\r\n\r\nimport androidx.fragment.app.Fragment;\r\nimport androidx.recyclerview.widget.LinearLayoutManager;\r\nimport androidx.recyclerview.widget.RecyclerView;\r\n\r\nimport android.view.LayoutInflater;\r\nimport android.view.View;\r\nimport android.view.ViewGroup;\r\nimport android.widget.ArrayAdapter;\r\nimport android.widget.EditText;\r\nimport android.widget.Spinner;\r\n\r\npublic class SearchFragment extends Fragment {\r\n\r\n    RecyclerView recyclerView;\r\n\r\n    @Override\r\n    public void onCreate(Bundle savedInstanceState) {\r\n        super.onCreate(savedInstanceState);\r\n    }\r\n\r\n    @Override\r\n    public View onCreateView(LayoutInflater inflater, ViewGroup container,\r\n                             Bundle savedInstanceState) {\r\n        View view = inflater.inflate(R.layout.search_fragment, container, false);\r\n        recyclerView = view.findViewById(R.id.recyclerView);\r\n\r\n        recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));\r\n        return view;\r\n    }\r\n\r\n    @Override\r\n    public void onStart() {\r\n        super.onStart();\r\n        //populate_weatherSpinner();\r\n    }\r\n\r\n    //    /** Fills the weatherSpinner with different types of weather. */\r\n    private void populate_weatherSpinner() {\r\n        final String[] weatherArray = getResources().getStringArray(R.array.weather_types);\r\n        final ArrayAdapter<String> stringArrayAdapter = new ArrayAdapter<>(this.getContext(), android.R.layout.simple_spinner_item, weatherArray);\r\n        stringArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_item);\r\n        //((Spinner) this.getView().findViewById(R.id.searchPage_weatherSpinner)).setAdapter(stringArrayAdapter);\r\n    }\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/example/weatherornot/SearchFragment.java b/app/src/main/java/com/example/weatherornot/SearchFragment.java
+--- a/app/src/main/java/com/example/weatherornot/SearchFragment.java	(revision d1b50649fb105370eb420a9930c56cdaf753067b)
++++ b/app/src/main/java/com/example/weatherornot/SearchFragment.java	(date 1669059399716)
+@@ -38,7 +38,7 @@
+         //populate_weatherSpinner();
+     }
+ 
+-    //    /** Fills the weatherSpinner with different types of weather. */
++    /** Fills the weatherSpinner with different types of weather. */
+     private void populate_weatherSpinner() {
+         final String[] weatherArray = getResources().getStringArray(R.array.weather_types);
+         final ArrayAdapter<String> stringArrayAdapter = new ArrayAdapter<>(this.getContext(), android.R.layout.simple_spinner_item, weatherArray);
+Index: app/src/main/java/com/example/weatherornot/classes/FirebaseInterface.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/example/weatherornot/classes/FirebaseInterface.java b/app/src/main/java/com/example/weatherornot/classes/FirebaseInterface.java
+new file mode 100644
+--- /dev/null	(date 1667855172048)
++++ b/app/src/main/java/com/example/weatherornot/classes/FirebaseInterface.java	(date 1667855172048)
+@@ -0,0 +1,15 @@
++package com.example.weatherornot.classes;
++
++/** This class serves as an intermediary between this app and Firebase.
++ *
++ */
++public class FirebaseInterface {
++
++    /** Private constructor. No instantiation. */
++    private FirebaseInterface() {}
++
++    public static void saveToDatabase() {
++
++    }
++
++}

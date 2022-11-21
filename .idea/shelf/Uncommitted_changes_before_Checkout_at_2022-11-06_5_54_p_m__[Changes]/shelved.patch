@@ -1,0 +1,73 @@
+Index: app/src/main/java/com/example/weatherornot/SearchPage.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.example.weatherornot;\r\n\r\nimport androidx.appcompat.app.AppCompatActivity;\r\n\r\nimport android.content.Intent;\r\nimport android.os.Bundle;\r\nimport android.view.View;\r\nimport android.widget.ArrayAdapter;\r\nimport android.widget.Button;\r\nimport android.widget.Spinner;\r\n\r\npublic class SearchPage extends AppCompatActivity {\r\n\r\n\r\n    @Override\r\n    protected void onCreate(Bundle savedInstanceState) {\r\n        super.onCreate(savedInstanceState);\r\n        setContentView(R.layout.activity_search_page);\r\n\r\n        populate_weatherSpinner();\r\n    }\r\n\r\n    /** Fills the weatherSpinner with different types of weather. */\r\n    private void populate_weatherSpinner() {\r\n        final String[] weatherArray = getResources().getStringArray(R.array.weather_types);\r\n        final ArrayAdapter<String> stringArrayAdapter = new ArrayAdapter<>(SearchPage.this, android.R.layout.simple_spinner_item, weatherArray);\r\n        stringArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_item);\r\n        ((Spinner) findViewById(R.id.searchPage_weatherSpinner)).setAdapter(stringArrayAdapter);\r\n    }\r\n\r\n    /** Button handler for search button. */\r\n    public void searchButtonHandler(View view) {\r\n        final Intent i = new Intent(this, ChooseLocation.class);\r\n        startActivity(i);\r\n    }\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/example/weatherornot/SearchPage.java b/app/src/main/java/com/example/weatherornot/SearchPage.java
+--- a/app/src/main/java/com/example/weatherornot/SearchPage.java	
++++ b/app/src/main/java/com/example/weatherornot/SearchPage.java	
+@@ -31,6 +31,18 @@
+     /** Button handler for search button. */
+     public void searchButtonHandler(View view) {
+         final Intent i = new Intent(this, ChooseLocation.class);
++
++        //TODO: Send queries to database.
++
++        /*
++        Process:
++        -> Get user id
++        -> Use user id as key for database
++        -> Place the search query under "location searches"
++         */
++
++
++
+         startActivity(i);
+     }
+ }
+\ No newline at end of file
+Index: app/src/main/java/com/example/weatherornot/MainActivity.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.example.weatherornot;\r\n\r\nimport androidx.annotation.NonNull;\r\nimport androidx.appcompat.app.AppCompatActivity;\r\n\r\nimport android.content.Intent;\r\nimport android.os.Bundle;\r\nimport android.util.Log;\r\nimport android.view.View;\r\nimport android.widget.EditText;\r\nimport android.widget.Toast;\r\n\r\nimport com.google.android.gms.tasks.OnCompleteListener;\r\nimport com.google.android.gms.tasks.Task;\r\nimport com.google.firebase.auth.AuthResult;\r\nimport com.google.firebase.auth.FirebaseAuth;\r\nimport com.google.firebase.auth.FirebaseUser;\r\n\r\npublic class MainActivity extends AppCompatActivity {\r\n\r\n    private FirebaseAuth mAuth;\r\n\r\n    @Override\r\n    protected void onCreate(Bundle savedInstanceState) {\r\n        super.onCreate(savedInstanceState);\r\n        setContentView(R.layout.activity_main);\r\n        mAuth = FirebaseAuth.getInstance();\r\n    }\r\n    @Override\r\n    public void onStart() {\r\n        super.onStart();\r\n        // Check if user is signed in (non-null) and update UI accordingly.\r\n        FirebaseUser currentUser = mAuth.getCurrentUser();\r\n//        if(currentUser != null){\r\n//            Intent loginUser = new Intent(MainActivity.this, SearchPage.class);\r\n//            startActivity(loginUser);\r\n//        }\r\n    }\r\n    public void continueAsGuest(View view) {\r\n        Intent continueAsGuest = new Intent(MainActivity.this, SearchPage.class);\r\n        startActivity(continueAsGuest);\r\n    }\r\n\r\n    public void loadSignUpPage(View view) {\r\n        Intent loadSignUpPage = new Intent(MainActivity.this, SignUpPage.class);\r\n        startActivity(loadSignUpPage);\r\n    }\r\n\r\n    public void loginButton(View view) {\r\n        EditText emailField = findViewById(R.id.emailField);\r\n        EditText passwordField = findViewById(R.id.passwordField);\r\n\r\n        String email = emailField.getText().toString().trim();\r\n        String password = passwordField.getText().toString().trim();\r\n\r\n        mAuth.signInWithEmailAndPassword(email, password)\r\n                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {\r\n                    @Override\r\n                    public void onComplete(@NonNull Task<AuthResult> task) {\r\n                        if (task.isSuccessful()) {\r\n                            // Sign in success, update UI with the signed-in user's information\r\n                            Log.d(\"log\", \"signInWithEmail:success\");\r\n                            FirebaseUser user = mAuth.getCurrentUser();\r\n                            Intent loginUser = new Intent(MainActivity.this, SearchPage.class);\r\n                            startActivity(loginUser);\r\n                        } else {\r\n                            // If sign in fails, display a message to the user.\r\n                            Log.w(\"log\", \"signInWithEmail:failure\", task.getException());\r\n                            Toast.makeText(MainActivity.this, \"Authentication failed.\",\r\n                                    Toast.LENGTH_SHORT).show();\r\n                        }\r\n                    }\r\n                });\r\n\r\n    }\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/example/weatherornot/MainActivity.java b/app/src/main/java/com/example/weatherornot/MainActivity.java
+--- a/app/src/main/java/com/example/weatherornot/MainActivity.java	
++++ b/app/src/main/java/com/example/weatherornot/MainActivity.java	
+@@ -36,6 +36,8 @@
+ //            startActivity(loginUser);
+ //        }
+     }
++
++    /** Moves into the app without logging in. */
+     public void continueAsGuest(View view) {
+         Intent continueAsGuest = new Intent(MainActivity.this, SearchPage.class);
+         startActivity(continueAsGuest);
+Index: app/src/main/res/layout/activity_choose_location.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<androidx.constraintlayout.widget.ConstraintLayout xmlns:android=\"http://schemas.android.com/apk/res/android\"\r\n    xmlns:app=\"http://schemas.android.com/apk/res-auto\"\r\n    xmlns:tools=\"http://schemas.android.com/tools\"\r\n    android:layout_width=\"match_parent\"\r\n    android:layout_height=\"match_parent\"\r\n    android:background=\"@color/app_background\"\r\n    tools:context=\".ChooseLocation\">\r\n\r\n    <TextView\r\n        android:id=\"@+id/chooseLocation_Title\"\r\n        android:layout_width=\"wrap_content\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:layout_marginStart=\"180dp\"\r\n        android:layout_marginTop=\"@dimen/default_space_child\"\r\n        android:layout_marginEnd=\"180dp\"\r\n        android:text=\"@string/choose_location\"\r\n        android:textColor=\"@color/white\"\r\n        android:textSize=\"34sp\"\r\n        app:layout_constraintEnd_toEndOf=\"parent\"\r\n        app:layout_constraintStart_toStartOf=\"parent\"\r\n        app:layout_constraintTop_toTopOf=\"parent\" />\r\n\r\n    <androidx.recyclerview.widget.RecyclerView\r\n        android:id=\"@+id/recyclerView\"\r\n        android:layout_width=\"408dp\"\r\n        android:layout_height=\"640dp\"\r\n        android:layout_margin=\"@dimen/default_space\"\r\n        android:layout_marginStart=\"@dimen/default_space_child\"\r\n        android:layout_marginTop=\"@dimen/default_space_child\"\r\n        android:layout_marginEnd=\"@dimen/default_space_child\"\r\n        android:layout_marginBottom=\"@dimen/default_space_child\"\r\n        android:background=\"@color/teal_700\"\r\n        app:layout_constraintBottom_toBottomOf=\"parent\"\r\n        app:layout_constraintEnd_toEndOf=\"parent\"\r\n        app:layout_constraintStart_toStartOf=\"parent\"\r\n        app:layout_constraintTop_toBottomOf=\"@+id/chooseLocation_Title\" />\r\n\r\n    <TextView\r\n        android:id=\"@+id/chooseLocation_title_large\"\r\n        android:layout_width=\"wrap_content\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:text=\"@string/choose_location\"\r\n        android:textSize=\"40sp\"\r\n        app:layout_constraintBottom_toBottomOf=\"parent\"\r\n        app:layout_constraintEnd_toEndOf=\"parent\"\r\n        app:layout_constraintStart_toStartOf=\"parent\"\r\n        app:layout_constraintTop_toTopOf=\"parent\" />\r\n</androidx.constraintlayout.widget.ConstraintLayout>
+===================================================================
+diff --git a/app/src/main/res/layout/activity_choose_location.xml b/app/src/main/res/layout/activity_choose_location.xml
+--- a/app/src/main/res/layout/activity_choose_location.xml	
++++ b/app/src/main/res/layout/activity_choose_location.xml	
+@@ -23,13 +23,8 @@
+ 
+     <androidx.recyclerview.widget.RecyclerView
+         android:id="@+id/recyclerView"
+-        android:layout_width="408dp"
+-        android:layout_height="640dp"
+-        android:layout_margin="@dimen/default_space"
+-        android:layout_marginStart="@dimen/default_space_child"
+-        android:layout_marginTop="@dimen/default_space_child"
+-        android:layout_marginEnd="@dimen/default_space_child"
+-        android:layout_marginBottom="@dimen/default_space_child"
++        android:layout_width="0dp"
++        android:layout_height="0dp"
+         android:background="@color/teal_700"
+         app:layout_constraintBottom_toBottomOf="parent"
+         app:layout_constraintEnd_toEndOf="parent"
