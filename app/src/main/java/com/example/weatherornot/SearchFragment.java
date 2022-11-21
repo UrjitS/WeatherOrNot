@@ -38,7 +38,7 @@ public class SearchFragment extends Fragment {
         //populate_weatherSpinner();
     }
 
-    //    /** Fills the weatherSpinner with different types of weather. */
+    /** Fills the weatherSpinner with different types of weather. */
     private void populate_weatherSpinner() {
         final String[] weatherArray = getResources().getStringArray(R.array.weather_types);
         final ArrayAdapter<String> stringArrayAdapter = new ArrayAdapter<>(this.getContext(), android.R.layout.simple_spinner_item, weatherArray);

@@ -34,12 +34,18 @@ public class SignUpPage extends AppCompatActivity {
         }
     }
 
+    /** Signs up an account to the Firebase auth.
+     *
+     * @param view The view.
+     */
     public void signUpAccount(View view) {
-        EditText emailField = findViewById(R.id.signUpEmailField);
-        EditText passwordField = findViewById(R.id.signUpPassword);
-        String email = emailField.getText().toString().trim();
-        String password = passwordField.getText().toString().trim();
+        final EditText emailField = findViewById(R.id.signUpEmailField);
+        final EditText passwordField = findViewById(R.id.signUpPassword);
+        final String email = emailField.getText().toString().trim();
+        final String password = passwordField.getText().toString().trim();
 
+        // If the email and password are valid, sign up the email.
+        // Else, display an error Toast.
         if (emailIsEmail(email) && passwordIsValid(password)) {
             mAuth.createUserWithEmailAndPassword(email, password)
                     .addOnCompleteListener(this, task -> {
