@@ -45,17 +45,13 @@ public class SearchPage extends AppCompatActivity implements NavigationView.OnNa
     Toolbar toolbar;
     FragmentManager fragmentManager;
     EditText stopNumber, routeNumber;
-
-    private static final String ESTIMATES_URL = "https://api.translink.ca/rttiapi/v1/stops";
-    private static final String appId = "H6I5JajNoTKkm7Ub2Wj0";
-
-    /** Whether or not the search is finished. */
+    private final String estimatesUrl = "https://api.translink.ca/rttiapi/v1/stops";
+    private final String appId = "H6I5JajNoTKkm7Ub2Wj0";
     boolean finishedSearch = false;
-
-    private final ArrayList<String> busesDestination = new ArrayList<>();
-    private final ArrayList<String> busesTime = new ArrayList<>();
-    private final ArrayList<String> busPattern = new ArrayList<>();
-    private final ArrayList<String> busLastUpdate = new ArrayList<>();
+    private ArrayList<String> busesDestination = new ArrayList<>();
+    private ArrayList<String> busesTime = new ArrayList<>();
+    private ArrayList<String> busPattern = new ArrayList<>();
+    private ArrayList<String> busLastUpdate = new ArrayList<>();
 //    private ArrayList<String> busDirection = new ArrayList<>();
 
 
@@ -134,7 +130,6 @@ public class SearchPage extends AppCompatActivity implements NavigationView.OnNa
         return true;
     }
 
-    // TODO: Figure out why this is unused
     public void BackToSearch(View view) {
         Toast.makeText(this, "Back", Toast.LENGTH_SHORT).show();
     }
@@ -147,7 +142,7 @@ public class SearchPage extends AppCompatActivity implements NavigationView.OnNa
         // 53987
 
         String tempURL = "";
-        String stopNo = stopNumber.getText().toString().trim();
+        String stopNo  = stopNumber.getText().toString().trim();
         String routeNo = routeNumber.getText().toString().trim();
 
         // Error messages.
@@ -162,23 +157,25 @@ public class SearchPage extends AppCompatActivity implements NavigationView.OnNa
                 // SUCCESS: The search term is a valid integer.
                 // Set the tempURL and proceed.
                 // https://api.translink.ca/rttiapi/v1/stops/60980/estimates
-                tempURL = ESTIMATES_URL + "/" + stopNo + "/estimates?apikey=" + appId + "&routeNo=" + routeNo;
+                tempURL = estimatesUrl + "/" + stopNo + "/estimates?apikey=" + appId + "&routeNo=" + routeNo;
             } catch (NumberFormatException e) {
                 // FAILURE: The search term is not a valid integer.
                 final Toast t = Toast.makeText(getApplicationContext(), errorMSGRoute, Toast.LENGTH_LONG);
                 t.show();
                 return;
             }
-        } else if (!stopNumber.getText().toString().isEmpty() && routeNumber.getText().toString().isEmpty()) {
+        }
+
+        else if (!stopNumber.getText().toString().isEmpty() && routeNumber.getText().toString().isEmpty()) {
             // If the search term is not a valid integer, exit function with message.
             try {
                 Integer.parseInt(stopNo);
                 // SUCCESS: The search term is a valid integer.
                 // Set the tempURL and proceed.
-                tempURL = ESTIMATES_URL + "/" + stopNo + "/estimates?apikey=" + appId;
+                tempURL = estimatesUrl + "/" + stopNo + "/estimates?apikey=" + appId;
             } catch (NumberFormatException e) {
                 // FAILURE: The search term is not a valid integer.
-                final Toast t = Toast.makeText(getApplicationContext(), errorMSGStop, Toast.LENGTH_LONG);
+                final Toast t = Toast.makeText(getApplicationContext(), errorMSGRoute, Toast.LENGTH_LONG);
                 t.show();
                 return;
             }
@@ -229,7 +226,6 @@ public class SearchPage extends AppCompatActivity implements NavigationView.OnNa
     private class AsyncTaskRunner extends AsyncTask<String, Void, String> {
         @Override
         protected String doInBackground(String... strings) {
-//          busDirection = new ArrayList<>();
 
             RequestQueue queue = Volley.newRequestQueue(SearchPage.this);
             StringRequest stringRequest = new StringRequest(Request.Method.GET, strings[0],
@@ -239,7 +235,6 @@ public class SearchPage extends AppCompatActivity implements NavigationView.OnNa
                             JSONObject jsonObject = xmlToJson.toJson();
                             Log.d("resp", String.valueOf(jsonObject));
 
-                            assert jsonObject != null;
                             JSONObject busesObj = jsonObject.getJSONObject("NextBuses");
                             JSONObject nextBusObj = busesObj.getJSONObject("NextBus");
                             JSONObject schedulesObj = nextBusObj.getJSONObject("Schedules");
