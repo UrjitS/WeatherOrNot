@@ -110,19 +110,16 @@ public class SearchPage extends AppCompatActivity implements NavigationView.OnNa
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
             case R.id.nav_home:
-                Toast.makeText(this, "Main Menu", Toast.LENGTH_SHORT).show();
                 Fragment fruit = new SearchFragment();
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                 fragmentTransaction.replace(R.id.ctnFragment, fruit);
                 fragmentTransaction.commit();
                 break;
             case R.id.nav_cycle:
-                Toast.makeText(this, "Login Page", Toast.LENGTH_SHORT).show();
                 final Intent loginPage = new Intent(this, MainActivity.class);
                 startActivity(loginPage);
                 break;
             case R.id.nav_bus:
-                Toast.makeText(this, "Logout", Toast.LENGTH_SHORT).show();
                 FirebaseAuth.getInstance().signOut();
                 final Intent logoutPage = new Intent(this, MainActivity.class);
                 startActivity(logoutPage);
@@ -289,7 +286,14 @@ public class SearchPage extends AppCompatActivity implements NavigationView.OnNa
                         } catch (JSONException e) {
                             e.getMessage();
                         }
+<<<<<<< HEAD
                     }, error -> Log.d("resp", "hello"));
+=======
+                    }, error -> {
+                Log.d("resp", "hello");
+                Toast t = Toast.makeText(getApplicationContext(), "Incorrect Number.", Toast.LENGTH_SHORT);
+                t.show();
+            });
 
             queue.add(stringRequest);
             return null;

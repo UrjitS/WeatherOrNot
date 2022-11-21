@@ -64,8 +64,6 @@ public class ResultsFragment extends Fragment implements ItemClickListener {
         getActivity().getSupportFragmentManager().beginTransaction()
 //                .setCustomAnimations(
 //                        R.anim.slide_in_right, // enter
-//                        R.anim.fade_out, // exit
-//                        R.anim.fade_in, // popEnter
 //                        R.anim.slide_out_right // popExit
 //                )
                 .replace(R.id.ctnFragment, imageFragment)
