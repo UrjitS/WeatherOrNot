@@ -39,13 +39,16 @@ public class ImageFragment extends Fragment {
         locName.setText(destination);
 
         TextView recordedTime = myView.findViewById(R.id.lastUpdatedTime);
-        recordedTime.setText(recTime);
+        String arrive = "Arrival Time: " + recTime;
+        recordedTime.setText(arrive);
 
         TextView pattern = myView.findViewById(R.id.busPattern);
-        pattern.setText(patternVal);
+        String busPattern = "Bus Pattern: " + patternVal;
+        pattern.setText(busPattern);
 
         TextView lastUpdatedTime = myView.findViewById(R.id.routeNum);
-        lastUpdatedTime.setText(lastUpd);
+        String lastUpdated = "Last Updated: " + lastUpd;
+        lastUpdatedTime.setText(lastUpdated);
 
         ImageView imageView = myView.findViewById(R.id.planetImage);
         imageView.setImageResource(imageId);

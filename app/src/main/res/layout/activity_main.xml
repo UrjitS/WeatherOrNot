@@ -7,6 +7,7 @@
     tools:context=".MainActivity"
     android:background="@color/app_background">
 
+
     <ImageView
         android:id="@+id/appLogo"
         android:layout_width="274dp"
