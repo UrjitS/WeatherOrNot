@@ -19,18 +19,25 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.062" />
 
-    <ImageView
-        android:id="@+id/planetImage"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="184dp"
-        android:contentDescription="@string/locationTemp"
-        android:src="@drawable/translink_bus_image"
-        app:layout_constraintBottom_toBottomOf="parent"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="232dp"
+        android:layout_height="291dp"
+        android:background="@color/app_background"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/destinationName" />
+        app:layout_constraintTop_toBottomOf="@+id/destinationName"
+        tools:context=".GoogleMap">
+
+        <fragment
+            android:id="@+id/mapAPI"
+            android:name="com.google.android.gms.maps.SupportMapFragment"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:layout_editor_absoluteX="-16dp"
+            tools:layout_editor_absoluteY="27dp" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <TextView
         android:id="@+id/lastUpdatedTime"
@@ -77,9 +84,9 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/planetImage"
+        app:layout_constraintTop_toBottomOf="@+id/routeNum"
         app:layout_constraintVertical_bias="1.0" />
-    
+
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

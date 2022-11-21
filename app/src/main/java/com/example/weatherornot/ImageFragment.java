@@ -49,10 +49,6 @@ public class ImageFragment extends Fragment {
         TextView lastUpdatedTime = myView.findViewById(R.id.routeNum);
         String lastUpdated = "Last Updated: " + lastUpd;
         lastUpdatedTime.setText(lastUpdated);
-
-        ImageView imageView = myView.findViewById(R.id.planetImage);
-        imageView.setImageResource(imageId);
-
         Button btnBack = myView.findViewById(R.id.btnBack);
         btnBack.setOnClickListener(view -> {
             Fragment fruit = new SearchFragment();
