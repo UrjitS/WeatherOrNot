@@ -286,14 +286,7 @@ public class SearchPage extends AppCompatActivity implements NavigationView.OnNa
                         } catch (JSONException e) {
                             e.getMessage();
                         }
-<<<<<<< HEAD
                     }, error -> Log.d("resp", "hello"));
-=======
-                    }, error -> {
-                Log.d("resp", "hello");
-                Toast t = Toast.makeText(getApplicationContext(), "Incorrect Number.", Toast.LENGTH_SHORT);
-                t.show();
-            });
 
             queue.add(stringRequest);
             return null;

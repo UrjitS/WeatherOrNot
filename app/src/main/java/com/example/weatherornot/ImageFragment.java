@@ -35,16 +35,16 @@ public class ImageFragment extends Fragment {
                              Bundle savedInstanceState) {
         View myView = inflater.inflate(R.layout.fragment_image, container, false);
 //        View myView = inflater.inflate(R.layout.fragment_frame_layout, container, false);
-        TextView locName = myView.findViewById(R.id.MyRowDestination);
+        TextView locName = myView.findViewById(R.id.destinationName);
         locName.setText(destination);
 
-        TextView recordedTime = myView.findViewById(R.id.MyRowTime);
+        TextView recordedTime = myView.findViewById(R.id.lastUpdatedTime);
         recordedTime.setText(recTime);
 
-        TextView pattern = myView.findViewById(R.id.MyRowPattern);
+        TextView pattern = myView.findViewById(R.id.busPattern);
         pattern.setText(patternVal);
 
-        TextView lastUpdatedTime = myView.findViewById(R.id.MyRowRouteNum);
+        TextView lastUpdatedTime = myView.findViewById(R.id.routeNum);
         lastUpdatedTime.setText(lastUpd);
 
         ImageView imageView = myView.findViewById(R.id.planetImage);
