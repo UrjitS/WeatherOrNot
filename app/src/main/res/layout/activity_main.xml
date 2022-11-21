@@ -7,17 +7,6 @@
     tools:context=".MainActivity"
     android:background="@color/app_background">
 
-    <!--    <ImageView-->
-<!--        android:id="@+id/appLogo"-->
-<!--        android:layout_width="274dp"-->
-<!--        android:layout_height="260dp"-->
-<!--        android:layout_marginTop="36dp"-->
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--        app:layout_constraintHorizontal_bias="0.496"-->
-<!--        app:layout_constraintStart_toStartOf="parent"-->
-<!--        app:layout_constraintTop_toTopOf="parent"-->
-<!--        app:srcCompat="@drawable/translink"-->
-<!--        android:contentDescription="@string/app_logo" />-->
 
     <pl.droidsonroids.gif.GifImageView
         android:id="@+id/gifImageView"
