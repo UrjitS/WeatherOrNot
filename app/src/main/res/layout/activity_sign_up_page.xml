@@ -14,24 +14,25 @@
         android:layout_marginTop="4dp"
         android:contentDescription="@string/app_logo"
         android:src="@drawable/translinkbus"
+        app:layout_constraintBottom_toTopOf="@+id/signInText"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.491"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+
     <TextView
         android:id="@+id/signInText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="396dp"
+        android:layout_marginBottom="20dp"
         android:text="@string/signup_text"
-        android:textSize="30sp"
         android:textColor="#000000"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:textSize="30sp"
+        app:layout_constraintBottom_toTopOf="@+id/signUpEmailField"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent" />
-
 
     <EditText
         android:id="@+id/signUpEmailField"
@@ -70,9 +71,9 @@
         android:id="@+id/signUpNewAccountButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="176dp"
-        android:text="@string/signup_text"
+        android:layout_marginBottom="80dp"
         android:onClick="signUpAccount"
+        android:text="@string/signup_text"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
