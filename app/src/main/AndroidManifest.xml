@@ -20,12 +20,12 @@
         tools:targetApi="31">
 
         <meta-data
-            android:name="com.google.android.geo.API_KEY"
-            android:value="H6I5JajNoTKkm7Ub2Wj0" />
-        <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
 
+        <meta-data
+            android:name="com.google.android.maps.v2.API_KEY"
+            android:value="AIzaSyBP2k-zP3O7dLl6FxiauF6PkaR1J5Pc6KY" />
 
         <activity
             android:name=".GoogleMap"
