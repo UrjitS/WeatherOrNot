@@ -226,11 +226,6 @@ public class SearchPage extends AppCompatActivity implements NavigationView.OnNa
     private class AsyncTaskRunner extends AsyncTask<String, Void, String> {
         @Override
         protected String doInBackground(String... strings) {
-            busesDestination = new ArrayList<>();
-            busesTime = new ArrayList<>();
-            busPattern = new ArrayList<>();
-            busLastUpdate = new ArrayList<>();
-//            busDirection = new ArrayList<>();
 
             RequestQueue queue = Volley.newRequestQueue(SearchPage.this);
             StringRequest stringRequest = new StringRequest(Request.Method.GET, strings[0],

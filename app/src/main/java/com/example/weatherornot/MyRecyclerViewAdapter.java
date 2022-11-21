@@ -67,7 +67,7 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
             text1 = itemView.findViewById(R.id.MyRowDestination);
             text2 = itemView.findViewById(R.id.MyRowTime);
             text3 = itemView.findViewById(R.id.MyRowPattern);
-            text4 = itemView.findViewById(R.id.MyRowRouteNum);
+            text4 = itemView.findViewById(R.id.myRowLastBusLeaveTime);
 //            text5 = itemView.findViewById(R.id.myRowVehicleNumber);
             image = itemView.findViewById(R.id.imageView);
             itemView.setOnClickListener(this);

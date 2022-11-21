@@ -35,7 +35,7 @@
 
         <TextView
             android:id="@+id/MyRowDestination"
-            android:layout_width="280dp"
+            android:layout_width="240dp"
             android:layout_height="wrap_content"
             android:paddingHorizontal="10dp"
             android:text="@string/locationTemp"
@@ -43,7 +43,7 @@
             android:textSize="18sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.6"
+            app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toEndOf="@+id/imageView"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.028" />
@@ -52,65 +52,97 @@
             android:id="@+id/MyRowTime"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:width="280dp"
+            android:width="240dp"
             android:paddingHorizontal="10dp"
             android:text="@string/introTemp"
             android:textColor="@color/black"
             android:textSize="16sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.6"
+            app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toEndOf="@+id/imageView"
             app:layout_constraintTop_toTopOf="@+id/MyRowDestination"
-            app:layout_constraintVertical_bias="0.289" />
+            app:layout_constraintVertical_bias="0.358" />
+
+        <TextView
+            android:id="@+id/timeTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:width="240dp"
+            android:paddingHorizontal="10dp"
+            android:text="@string/bus_arrival_time"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toEndOf="@+id/imageView"
+            app:layout_constraintTop_toTopOf="@+id/MyRowDestination"
+            app:layout_constraintVertical_bias="0.231" />
+
+        <TextView
+            android:id="@+id/busPatternTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:width="240dp"
+            android:paddingHorizontal="10dp"
+            android:text="@string/bus_pattern"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toEndOf="@+id/imageView"
+            app:layout_constraintTop_toTopOf="@+id/MyRowDestination"
+            app:layout_constraintVertical_bias="0.554" />
 
         <TextView
             android:id="@+id/MyRowPattern"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:width="280dp"
+            android:width="240dp"
             android:paddingHorizontal="10dp"
             android:text="@string/pattern"
             android:textColor="@color/black"
             android:textSize="16sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.6"
+            app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toEndOf="@+id/imageView"
             app:layout_constraintTop_toTopOf="@+id/MyRowDestination"
-            app:layout_constraintVertical_bias="0.485" />
+            app:layout_constraintVertical_bias="0.682" />
 
         <TextView
-            android:id="@+id/MyRowRouteNum"
+            android:id="@+id/lastBusTimeTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:width="280dp"
+            android:width="240dp"
             android:paddingHorizontal="10dp"
-            android:text="@string/temp_route_number"
+            android:text="Last bus arrival time"
             android:textColor="@color/black"
             android:textSize="16sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.6"
+            app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toEndOf="@+id/imageView"
             app:layout_constraintTop_toTopOf="@+id/MyRowDestination"
-            app:layout_constraintVertical_bias="0.687" />
+            app:layout_constraintVertical_bias="0.867" />
 
         <TextView
-            android:id="@+id/myRowVehicleNumber"
+            android:id="@+id/myRowLastBusLeaveTime"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:width="280dp"
+            android:width="240dp"
             android:paddingHorizontal="10dp"
-            android:text="@string/vehicle_num"
+            android:text="@string/last_bus_that_arrival_time"
             android:textColor="@color/black"
             android:textSize="16sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.6"
+            app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toEndOf="@+id/imageView"
             app:layout_constraintTop_toTopOf="@+id/MyRowDestination"
-            app:layout_constraintVertical_bias="0.907" />
+            app:layout_constraintVertical_bias="0.994" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
