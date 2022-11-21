@@ -45,13 +45,15 @@ public class SearchPage extends AppCompatActivity implements NavigationView.OnNa
     Toolbar toolbar;
     FragmentManager fragmentManager;
     EditText stopNumber, routeNumber;
-    private final String estimatesUrl = "https://api.translink.ca/rttiapi/v1/stops";
-    private final String appId = "H6I5JajNoTKkm7Ub2Wj0";
+
+    private final String ESTIMATES_URL = "https://api.translink.ca/rttiapi/v1/stops";
+    private final String APP_ID = "H6I5JajNoTKkm7Ub2Wj0";
+
     boolean finishedSearch = false;
-    private ArrayList<String> busesDestination = new ArrayList<>();
-    private ArrayList<String> busesTime = new ArrayList<>();
-    private ArrayList<String> busPattern = new ArrayList<>();
-    private ArrayList<String> busLastUpdate = new ArrayList<>();
+    private final ArrayList<String> busesDestination = new ArrayList<>();
+    private final ArrayList<String> busesTime = new ArrayList<>();
+    private final ArrayList<String> busPattern = new ArrayList<>();
+    private final ArrayList<String> busLastUpdate = new ArrayList<>();
 //    private ArrayList<String> busDirection = new ArrayList<>();
 
 
@@ -149,6 +151,7 @@ public class SearchPage extends AppCompatActivity implements NavigationView.OnNa
         final String errorMSGStop = "Please enter a valid stop number.";
         final String errorMSGRoute = "Please enter a valid route number.";
 
+        // Error checking for STOPS.
         if (!stopNumber.getText().toString().isEmpty() && !routeNumber.getText().toString().isEmpty()) {
             // If the search term is not a valid integer, exit function with message.
             try {
@@ -157,22 +160,23 @@ public class SearchPage extends AppCompatActivity implements NavigationView.OnNa
                 // SUCCESS: The search term is a valid integer.
                 // Set the tempURL and proceed.
                 // https://api.translink.ca/rttiapi/v1/stops/60980/estimates
-                tempURL = estimatesUrl + "/" + stopNo + "/estimates?apikey=" + appId + "&routeNo=" + routeNo;
+                tempURL = ESTIMATES_URL + "/" + stopNo + "/estimates?apikey=" + APP_ID + "&routeNo=" + routeNo;
             } catch (NumberFormatException e) {
                 // FAILURE: The search term is not a valid integer.
-                final Toast t = Toast.makeText(getApplicationContext(), errorMSGRoute, Toast.LENGTH_LONG);
+                final Toast t = Toast.makeText(getApplicationContext(), errorMSGStop, Toast.LENGTH_LONG);
                 t.show();
                 return;
             }
         }
 
+        // Error checking for ROUTES.
         else if (!stopNumber.getText().toString().isEmpty() && routeNumber.getText().toString().isEmpty()) {
             // If the search term is not a valid integer, exit function with message.
             try {
                 Integer.parseInt(stopNo);
                 // SUCCESS: The search term is a valid integer.
                 // Set the tempURL and proceed.
-                tempURL = estimatesUrl + "/" + stopNo + "/estimates?apikey=" + appId;
+                tempURL = ESTIMATES_URL + "/" + stopNo + "/estimates?apikey=" + APP_ID;
             } catch (NumberFormatException e) {
                 // FAILURE: The search term is not a valid integer.
                 final Toast t = Toast.makeText(getApplicationContext(), errorMSGRoute, Toast.LENGTH_LONG);
