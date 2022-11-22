@@ -3,15 +3,27 @@ package com.example.weatherornot;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
+
+import fr.arnaudguyon.xmltojsonlib.XmlToJson;
 
 public class GoogleMap extends AppCompatActivity implements OnMapReadyCallback {
 
@@ -33,4 +45,7 @@ public class GoogleMap extends AppCompatActivity implements OnMapReadyCallback {
         googleMap.addMarker(new MarkerOptions().position(comp3717Lecture).title("Stop ID: 52740"));
         googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(comp3717Lecture, 15));
     }
+
+
+
 }

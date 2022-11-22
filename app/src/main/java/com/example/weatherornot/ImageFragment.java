@@ -1,9 +1,14 @@
 package com.example.weatherornot;
 
+import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,13 +16,29 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.w3c.dom.Text;
 
-public class ImageFragment extends Fragment {
+import fr.arnaudguyon.xmltojsonlib.XmlToJson;
 
-    private String destination, recTime, patternVal, lastUpd;
+public class ImageFragment extends Fragment implements OnMapReadyCallback {
+
+    private String destination, recTime, patternVal, lastUpd, stopNo, routeNo;
     private int imageId;
-
+    SupportMapFragment mapFragment;
+    com.google.android.gms.maps.GoogleMap googleMapS;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -27,14 +48,35 @@ public class ImageFragment extends Fragment {
             patternVal = getArguments().getString("pattern");
             lastUpd = getArguments().getString("lastUpdate");
             imageId = getArguments().getInt("image");
+            this.stopNo = getArguments().getString("StopNo");
+            this.routeNo = getArguments().getString("RoutNo");
         }
+
+    }
+    @Override
+    public void onMapReady(@NonNull com.google.android.gms.maps.GoogleMap googleMap) {
+        googleMapS = googleMap;
+        // Marker test. 49.2477085254479, -123.0038584025334
+        LatLng comp3717Lecture = new LatLng(49.2477085254479, -123.0038584025334);
+        googleMapS.addMarker(new MarkerOptions().position(comp3717Lecture).title("Stop ID: 52740"));
+        googleMapS.moveCamera(CameraUpdateFactory.newLatLngZoom(comp3717Lecture, 15));
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+
+
+        System.out.println("STOP: " + stopNo);
+        System.out.println("ROUTE: " + routeNo);
+
         View myView = inflater.inflate(R.layout.fragment_image, container, false);
-//        View myView = inflater.inflate(R.layout.fragment_frame_layout, container, false);
+        mapFragment = (SupportMapFragment) this.getChildFragmentManager().findFragmentById(R.id.mapAPI);
+        mapFragment.getMapAsync(this);
+
+        AsyncTaskRunner runner = new AsyncTaskRunner();
+        String tempURL = "https://api.translink.ca/rttiapi/v1/buses?apikey=H6I5JajNoTKkm7Ub2Wj0&stopNo=" + stopNo;
+        runner.execute(tempURL);
+
         TextView locName = myView.findViewById(R.id.destinationName);
         locName.setText(destination);
 
@@ -64,6 +106,41 @@ public class ImageFragment extends Fragment {
 
         return myView;
     }
+    private class AsyncTaskRunner extends AsyncTask<String, Void, String> {
+        @Override
+        protected String doInBackground(String... strings) {
 
+            RequestQueue queue = Volley.newRequestQueue(getContext());
+            StringRequest stringRequest = new StringRequest(Request.Method.GET, strings[0],
+                    response -> {
+                        try {
+                            XmlToJson xmlToJson = new XmlToJson.Builder(response).build();
+                            JSONObject jsonObject = xmlToJson.toJson();
+                            Log.d("resp", String.valueOf(jsonObject));
 
+                            JSONObject busesObj = jsonObject.getJSONObject("Buses");
+                            JSONArray busScheduleObj = busesObj.getJSONArray("Bus");
+                            double longitude = busScheduleObj.getJSONObject(0).getDouble("Longitude");
+                            double latitude = busScheduleObj.getJSONObject(0).getDouble("Latitude");
+
+                            LatLng comp3717Lecture = new LatLng(latitude, longitude);
+                            googleMapS.addMarker(new MarkerOptions().position(comp3717Lecture).title("Bus Stop"));
+                            googleMapS.moveCamera(CameraUpdateFactory.newLatLngZoom(comp3717Lecture, 15));
+
+                        } catch (JSONException e) {
+                            System.out.println(e.getMessage());
+                        }
+                    }, error -> Log.d("resp", "hello"));
+
+            queue.add(stringRequest);
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(String bitmap) {
+            //super.onPostExecute(bitmap);
+
+        }
+
+    }
 }

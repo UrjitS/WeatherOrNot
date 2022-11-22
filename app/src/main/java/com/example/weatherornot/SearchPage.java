@@ -49,12 +49,10 @@ public class SearchPage extends AppCompatActivity implements NavigationView.OnNa
     private final String ESTIMATES_URL = "https://api.translink.ca/rttiapi/v1/stops";
     private final String APP_ID = "H6I5JajNoTKkm7Ub2Wj0";
 
-    boolean finishedSearch = false;
     private final ArrayList<String> busesDestination = new ArrayList<>();
     private final ArrayList<String> busesTime = new ArrayList<>();
     private final ArrayList<String> busPattern = new ArrayList<>();
     private final ArrayList<String> busLastUpdate = new ArrayList<>();
-//    private ArrayList<String> busDirection = new ArrayList<>();
 
 
     FirebaseAuth firebaseAuth;
@@ -91,8 +89,6 @@ public class SearchPage extends AppCompatActivity implements NavigationView.OnNa
      * Button handler for search button.
      */
     public void searchButtonHandler(View view) {
-//        final Intent res = new Intent(this, MapsActivity.class);
-//        startActivity(res);
         uploadSearchQueryToFireBase();
         getBuses();
     }
@@ -186,7 +182,7 @@ public class SearchPage extends AppCompatActivity implements NavigationView.OnNa
         }
 
         AsyncTaskRunner runner = new AsyncTaskRunner();
-        runner.execute(tempURL);
+        runner.execute(tempURL, stopNo, routeNo);
 
     }
 
@@ -245,45 +241,30 @@ public class SearchPage extends AppCompatActivity implements NavigationView.OnNa
                             JSONArray busScheduleObj = schedulesObj.getJSONArray("Schedule");
 
                             for (int i = 0; i < busScheduleObj.length(); i++) {
-                                System.out.println("for loop");
                                 String destination = busScheduleObj.getJSONObject(i).getString("Destination");
                                 String expectedLeaveTime = busScheduleObj.getJSONObject(i).getString("ExpectedLeaveTime");
                                 String lastTimeUpdate = busScheduleObj.getJSONObject(i).getString("LastUpdate");
                                 String pattern = busScheduleObj.getJSONObject(i).getString("Pattern");
-//                                String routeNo = busScheduleObj.getJSONObject(i).getString("RouteNo");
-//                                String direction = busScheduleObj.getJSONObject(i).getString("Direction");
                                 busesDestination.add(destination);
                                 busesTime.add(expectedLeaveTime);
                                 busPattern.add(pattern);
                                 busLastUpdate.add(lastTimeUpdate);
-//                                busDirection.add(direction);
                             }
                             Bundle bundle = new Bundle();
                             bundle.putStringArrayList("Destination", busesDestination);
                             bundle.putStringArrayList("Times", busesTime);
                             bundle.putStringArrayList("Pattern", busPattern);
                             bundle.putStringArrayList("LastUpdate", busLastUpdate);
-//                            bundle.putStringArrayList("Direction", busDirection);
+                            bundle.putString("StopNo", strings[1]);
+                            bundle.putString("RoutNo", strings[2]);
+
                             Fragment results = new ResultsFragment();
                             results.setArguments(bundle);
                             FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                             fragmentTransaction.replace(R.id.ctnFragment, results);
                             fragmentTransaction.commit();
-//                            searchButtonHandler();
-//                            Log.d("resp", direction);
-//                            Log.d("resp", destination);
-//                            Log.d("resp", pattern);
-//                            Log.d("resp", routeNo);
-//                            Log.d("resp", String.valueOf(vehicleNo));
-//                            textView.setText("Bus details: " +
-//                                    "\nDirection: " + direction
-//                                    + "\nDestination: " +destination
-//                                    + "\nBus Pattern: " + pattern
-//                                    + "\nBus Route number: " + routeNo
-//                                    + "\nBus Vehicle number: "+ vehicleNo);
-                            finishedSearch = true;
                         } catch (JSONException e) {
-                            e.getMessage();
+                            System.out.println(e.getMessage());
                         }
                     }, error -> Log.d("resp", "hello"));
 

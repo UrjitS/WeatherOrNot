@@ -15,6 +15,9 @@ public class ResultsFragment extends Fragment implements ItemClickListener {
 
     RecyclerView recyclerView;
     ArrayList<String> destination, times, busPattern, bLastUpdate;
+    String stopNo;
+    String routeNo;
+
     int[] images;
 
     @Override
@@ -28,12 +31,15 @@ public class ResultsFragment extends Fragment implements ItemClickListener {
 
         View view = inflater.inflate(R.layout.fragment_gallery, container, false);
         recyclerView = view.findViewById(R.id.recyclerView);
+
         Bundle b = getArguments();
+
         destination = b.getStringArrayList("Destination");
         times = b.getStringArrayList("Times");
         busPattern = b.getStringArrayList("Pattern");
-//        routeNum = b.getStringArrayList("RouteNumber");
         bLastUpdate = b.getStringArrayList("LastUpdate");
+        this.stopNo = b.getString("StopNo");
+        this.routeNo = b.getString("RoutNo");
 
         images = new int[destination.size()];
         for (int i = 0; i < destination.size(); i++) {
@@ -58,8 +64,10 @@ public class ResultsFragment extends Fragment implements ItemClickListener {
         bundle.putString("time", times.get(position));
         bundle.putString("pattern", busPattern.get(position));
         bundle.putString("lastUpdate", bLastUpdate.get(position));
-//        bundle.putString("direction", bDirection.get(position));
         bundle.putInt("image", images[position]);
+        bundle.putString("StopNo", this.stopNo);
+        bundle.putString("RoutNo", this.routeNo);
+
         imageFragment.setArguments(bundle);
         getActivity().getSupportFragmentManager().beginTransaction()
 //                .setCustomAnimations(
