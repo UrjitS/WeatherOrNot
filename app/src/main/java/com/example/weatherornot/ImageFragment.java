@@ -74,7 +74,7 @@ public class ImageFragment extends Fragment implements OnMapReadyCallback {
         mapFragment.getMapAsync(this);
 
         AsyncTaskRunner runner = new AsyncTaskRunner();
-        String tempURL = "https://api.translink.ca/rttiapi/v1/buses?apikey=H6I5JajNoTKkm7Ub2Wj0&stopNo=" + stopNo;
+        String tempURL = "https://api.translink.ca/rttiapi/v1/stops/" + stopNo + "?apikey=H6I5JajNoTKkm7Ub2Wj0";
         runner.execute(tempURL);
 
         TextView locName = myView.findViewById(R.id.destinationName);
@@ -118,10 +118,9 @@ public class ImageFragment extends Fragment implements OnMapReadyCallback {
                             JSONObject jsonObject = xmlToJson.toJson();
                             Log.d("resp", String.valueOf(jsonObject));
 
-                            JSONObject busesObj = jsonObject.getJSONObject("Buses");
-                            JSONArray busScheduleObj = busesObj.getJSONArray("Bus");
-                            double longitude = busScheduleObj.getJSONObject(0).getDouble("Longitude");
-                            double latitude = busScheduleObj.getJSONObject(0).getDouble("Latitude");
+                            JSONObject busesObj = jsonObject.getJSONObject("Stop");
+                            double longitude = busesObj.getDouble("Longitude");
+                            double latitude = busesObj.getDouble("Latitude");
 
                             LatLng comp3717Lecture = new LatLng(latitude, longitude);
                             googleMapS.addMarker(new MarkerOptions().position(comp3717Lecture).title("Bus Stop"));
