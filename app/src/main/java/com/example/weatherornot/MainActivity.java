@@ -51,8 +51,13 @@ public class MainActivity extends AppCompatActivity {
 
         String email = emailField.getText().toString().trim();
         String password = passwordField.getText().toString().trim();
+        // >6 at least one capital, at least one special, at least one number
 
-        if (emailIsEmail(email) && passwordIsValid(password)) {
+        if (passwordIsValid(password)) {
+            Toast.makeText(MainActivity.this, "Please enter an email with a capital letter, special character, and numbers.",
+                    Toast.LENGTH_SHORT).show();
+        }
+        if (emailIsEmail(email)) {
             mAuth.signInWithEmailAndPassword(email, password)
                     .addOnCompleteListener(this, task -> {
                         if (task.isSuccessful()) {

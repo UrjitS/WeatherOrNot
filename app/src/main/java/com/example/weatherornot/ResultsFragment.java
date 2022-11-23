@@ -14,7 +14,7 @@ import java.util.ArrayList;
 public class ResultsFragment extends Fragment implements ItemClickListener {
 
     RecyclerView recyclerView;
-    ArrayList<String> destination, times, busPattern, bLastUpdate;
+    ArrayList<String> destination, times, busPattern;
     String stopNo;
     String routeNo;
 
@@ -37,7 +37,6 @@ public class ResultsFragment extends Fragment implements ItemClickListener {
         destination = b.getStringArrayList("Destination");
         times = b.getStringArrayList("Times");
         busPattern = b.getStringArrayList("Pattern");
-        bLastUpdate = b.getStringArrayList("LastUpdate");
         this.stopNo = b.getString("StopNo");
         this.routeNo = b.getString("RoutNo");
 
@@ -48,7 +47,7 @@ public class ResultsFragment extends Fragment implements ItemClickListener {
 
         MyRecyclerViewAdapter myRecyclerViewAdapter = new
                 MyRecyclerViewAdapter(getActivity(),
-                destination, times, busPattern, bLastUpdate, images);
+                destination, times, busPattern, images);
         myRecyclerViewAdapter.setClickListener(this);
         recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
         recyclerView.setAdapter(myRecyclerViewAdapter);
@@ -63,7 +62,6 @@ public class ResultsFragment extends Fragment implements ItemClickListener {
         bundle.putString("destination", destination.get(position));
         bundle.putString("time", times.get(position));
         bundle.putString("pattern", busPattern.get(position));
-        bundle.putString("lastUpdate", bLastUpdate.get(position));
         bundle.putInt("image", images[position]);
         bundle.putString("StopNo", this.stopNo);
         bundle.putString("RoutNo", this.routeNo);

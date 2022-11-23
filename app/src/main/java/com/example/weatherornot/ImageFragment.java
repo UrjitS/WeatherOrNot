@@ -35,7 +35,7 @@ import fr.arnaudguyon.xmltojsonlib.XmlToJson;
 
 public class ImageFragment extends Fragment implements OnMapReadyCallback {
 
-    private String destination, recTime, patternVal, lastUpd, stopNo, routeNo;
+    private String destination, recTime, patternVal, stopNo, routeNo;
     private int imageId;
     SupportMapFragment mapFragment;
     com.google.android.gms.maps.GoogleMap googleMapS;
@@ -46,7 +46,6 @@ public class ImageFragment extends Fragment implements OnMapReadyCallback {
             destination = getArguments().getString("destination");
             recTime = getArguments().getString("time");
             patternVal = getArguments().getString("pattern");
-            lastUpd = getArguments().getString("lastUpdate");
 
             imageId = getArguments().getInt("image");
             this.stopNo = getArguments().getString("StopNo");
@@ -78,17 +77,16 @@ public class ImageFragment extends Fragment implements OnMapReadyCallback {
         TextView locName = myView.findViewById(R.id.destinationName);
         locName.setText(destination);
 
-        TextView recordedTime = myView.findViewById(R.id.lastUpdatedTime);
-        String arrive = "Arrival Time: " + recTime;
-        recordedTime.setText(arrive);
+        TextView timeC = myView.findViewById(R.id.busPattern2);
+        String timeCtext = "Arrival Time: " + recTime;
+        timeC.setText(timeCtext);
+
 
         TextView pattern = myView.findViewById(R.id.busPattern);
         String busPattern = "Bus Pattern: " + patternVal;
         pattern.setText(busPattern);
 
-        TextView lastUpdatedTime = myView.findViewById(R.id.routeNum);
-        String lastUpdated = "Last Updated: " + lastUpd;
-        lastUpdatedTime.setText(lastUpdated);
+
         Button btnBack = myView.findViewById(R.id.btnBack);
         btnBack.setOnClickListener(view -> {
             Fragment fruit = new SearchFragment();
