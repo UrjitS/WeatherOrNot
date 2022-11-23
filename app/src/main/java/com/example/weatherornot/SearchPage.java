@@ -151,7 +151,7 @@ public class SearchPage extends AppCompatActivity implements NavigationView.OnNa
         final String errorMSGRoute = "Please enter a valid route number.";
 
         // Error checking for STOPS.
-        if (!stopNumber.getText().toString().isEmpty() && !routeNumber.getText().toString().isEmpty()) {
+        if (!stopNumber.getText().toString().isEmpty() && routeNumber.getText().toString().isEmpty()) {
             // If the search term is not a valid integer, exit function with message.
             try {
                 Integer.parseInt(stopNo);
@@ -170,7 +170,7 @@ public class SearchPage extends AppCompatActivity implements NavigationView.OnNa
         }
 
         // Error checking for ROUTES.
-        else if (!routeNumber.getText().toString().isEmpty() && routeNumber.getText().toString().isEmpty()) {
+        else if (!routeNumber.getText().toString().isEmpty() && stopNumber.getText().toString().isEmpty()) {
             // If the search term is not a valid integer, exit function with message.
             try {
                 Integer.parseInt(routeNo);
