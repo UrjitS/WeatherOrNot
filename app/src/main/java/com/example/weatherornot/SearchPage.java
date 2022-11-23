@@ -160,7 +160,7 @@ public class SearchPage extends AppCompatActivity implements NavigationView.OnNa
         final String errorMSGRoute = "Please enter a valid route number.";
 
         if (stopNo.isEmpty() && routeNo.isEmpty()) {
-            final Toast t = Toast.makeText(getApplicationContext(), errorMSGStop, Toast.LENGTH_LONG);
+            final Toast t = Toast.makeText(getApplicationContext(), errorMSGStop, Toast.LENGTH_SHORT);
             t.show();
             return;
         }
@@ -178,7 +178,7 @@ public class SearchPage extends AppCompatActivity implements NavigationView.OnNa
                 tempURL = ESTIMATES_URL + "/" + stopNo + "/estimates?apikey=" + APP_ID + "&routeNo=" + routeNo;
             } catch (NumberFormatException e) {
                 // FAILURE: The search term is not a valid integer.
-                final Toast t = Toast.makeText(getApplicationContext(), errorMSGStop, Toast.LENGTH_LONG);
+                final Toast t = Toast.makeText(getApplicationContext(), errorMSGStop, Toast.LENGTH_SHORT);
                 t.show();
                 return;
             }
@@ -195,7 +195,7 @@ public class SearchPage extends AppCompatActivity implements NavigationView.OnNa
                 tempURL = ESTIMATES_URL + "/" + routeNo + "/estimates?apikey=" + APP_ID;
             } catch (NumberFormatException e) {
                 // FAILURE: The search term is not a valid integer.
-                final Toast t = Toast.makeText(getApplicationContext(), errorMSGRoute, Toast.LENGTH_LONG);
+                final Toast t = Toast.makeText(getApplicationContext(), errorMSGRoute, Toast.LENGTH_SHORT);
                 t.show();
                 return;
             }
