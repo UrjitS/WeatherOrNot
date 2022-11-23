@@ -56,14 +56,15 @@ public class SearchPage extends AppCompatActivity implements NavigationView.OnNa
 
     FirebaseAuth firebaseAuth;
 
-    /** The tag for the debug messages. */
+    /**
+     * The tag for the debug messages.
+     */
     public final static String DEBUG_TAG = "SearchPageDebug";
 
-    /** The text typed into the stop search bar. */
+    /**
+     * The text typed into the stop search bar.
+     */
     private String stop_search_query;
-
-    /** The text typed into the route search bar. */
-    private String route_search_query;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -153,20 +154,26 @@ public class SearchPage extends AppCompatActivity implements NavigationView.OnNa
 
         String tempURL = "";
         String stopNo = stopNumber.getText().toString().trim();
-        String routeNo = routeNumber.getText().toString().trim();
+        String routeNo = ""; // Deprecated.
 
         // Error messages.
         final String errorMSGStop = "Please enter a valid stop number.";
-        final String errorMSGRoute = "Please enter a valid route number.";
 
-        if (stopNo.isEmpty() && routeNo.isEmpty()) {
+        if (stopNo.isEmpty()) {
             final Toast t = Toast.makeText(getApplicationContext(), errorMSGStop, Toast.LENGTH_SHORT);
             t.show();
             return;
         }
 
         // Error checking for STOPS.
-        if (!stopNumber.getText().toString().isEmpty() && routeNumber.getText().toString().isEmpty()) {
+        if (!stopNumber.getText().toString().isEmpty()) {
+            // If the search term is more than 5 characters, exit the function with a message.
+            if (stopNumber.getText().toString().length() > 5) {
+                final Toast t = Toast.makeText(getApplicationContext(), errorMSGStop, Toast.LENGTH_SHORT);
+                t.show();
+                return;
+            }
+
             // If the search term is not a valid integer, exit function with message.
             try {
                 Integer.parseInt(stopNo);
@@ -182,27 +189,15 @@ public class SearchPage extends AppCompatActivity implements NavigationView.OnNa
                 t.show();
                 return;
             }
+        } else {
+            // FAILURE: The field is empty.
+            final Toast t = Toast.makeText(getApplicationContext(), errorMSGStop, Toast.LENGTH_SHORT);
+            t.show();
         }
 
-        // Error checking for ROUTES.
-        else if (!routeNumber.getText().toString().isEmpty() && stopNumber.getText().toString().isEmpty()) {
-            // If the search term is not a valid integer, exit function with message.
-            try {
-                Integer.parseInt(routeNo);
-                // SUCCESS: The search term is a valid integer.
-                // Set the tempURL and proceed.
-                route_search_query = routeNo;
-                tempURL = ESTIMATES_URL + "/" + routeNo + "/estimates?apikey=" + APP_ID;
-            } catch (NumberFormatException e) {
-                // FAILURE: The search term is not a valid integer.
-                final Toast t = Toast.makeText(getApplicationContext(), errorMSGRoute, Toast.LENGTH_SHORT);
-                t.show();
-                return;
-            }
-        }
 
         AsyncTaskRunner runner = new AsyncTaskRunner();
-        runner.execute(tempURL, stopNo, routeNo);
+        runner.execute(tempURL, stopNo, "");
 
     }
 
@@ -225,7 +220,7 @@ public class SearchPage extends AppCompatActivity implements NavigationView.OnNa
             // Keys for the database.
             final String USERS_KEY = "users";
             final String SEARCH_HISTORY_KEY = "search_history";
-            final String ROUTE_OR_STOP;
+            final String STOP_KEY = "stop";
 
             // Generate the path.
             final StringBuilder path = new StringBuilder();
@@ -236,17 +231,12 @@ public class SearchPage extends AppCompatActivity implements NavigationView.OnNa
                     .append(SEARCH_HISTORY_KEY)
                     .append("/");
 
-            // Push to either the "stop" or "route" tree.
-            if (route_search_query != null) {
-                ROUTE_OR_STOP = "route";
-                path.append(ROUTE_OR_STOP);
-                saveToFirebaseDatabase(path.toString(), stop_search_query);
-            } else if (stop_search_query != null) {
-                ROUTE_OR_STOP = "stop";
-                path.append(ROUTE_OR_STOP);
+            // Push to the "stop" tree
+            if (stop_search_query != null) {
+                path.append(STOP_KEY);
                 saveToFirebaseDatabase(path.toString(), stop_search_query);
             } else {
-                Log.d(DEBUG_TAG, "ERROR: ROUTE AND STOP QUERY ARE BOTH NULL");
+                Log.e(DEBUG_TAG, "ERROR: STOP QUERY IS NULL");
             }
 
         } else {
@@ -268,8 +258,8 @@ public class SearchPage extends AppCompatActivity implements NavigationView.OnNa
         Log.d(DEBUG_TAG, msg);
     }
 
-    /** Retrieves the bus information.
-     *
+    /**
+     * Retrieves the bus information.
      */
     private class AsyncTaskRunner extends AsyncTask<String, Void, String> {
         @Override
