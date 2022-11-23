@@ -66,9 +66,7 @@ public class SearchPage extends AppCompatActivity implements NavigationView.OnNa
      */
     private String stop_search_query;
 
-    /**
-     * The maximum length of a bus stop query.
-     */
+    /** The maximum length of a bus stop query. */
     private static final int MAX_STOP_QUERY_LENGTH = 5;
 
     @Override
@@ -232,15 +230,15 @@ public class SearchPage extends AppCompatActivity implements NavigationView.OnNa
                     .append(SEARCH_HISTORY_KEY)
                     .append("/");
 
-            // If the query is more than 5 characters, exit the function.
-            if (stop_search_query.length() > MAX_STOP_QUERY_LENGTH) {
-                Log.d(DEBUG_TAG, "Invalid search query. Upload cancelled.");
-                return;
-            }
 
             // Push to the "stop" tree
             if (stop_search_query != null) {
                 path.append(STOP_KEY);
+                // If the query is more than 5 characters, exit the function.
+                if(stop_search_query.length() > MAX_STOP_QUERY_LENGTH) {
+                    Log.d(DEBUG_TAG, "Invalid search query. Upload cancelled.");
+                    return;
+                }
                 saveToFirebaseDatabase(path.toString(), stop_search_query);
             } else {
                 Log.e(DEBUG_TAG, "ERROR: STOP QUERY IS NULL");
