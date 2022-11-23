@@ -59,7 +59,9 @@ public class SearchPage extends AppCompatActivity implements NavigationView.OnNa
 
     public final static String DEBUG_TAG = "SearchPageDebug";
 
-    /** The text typed into either one of the search bars. */
+    /**
+     * The text typed into either one of the search bars.
+     */
     private String stop_search_query;
     private String route_search_query;
 
@@ -107,6 +109,9 @@ public class SearchPage extends AppCompatActivity implements NavigationView.OnNa
         startActivity(toMap);
     }
 
+    /**
+     * Handler for the side nav bar.
+     */
     @SuppressLint("NonConstantResourceId")
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -136,6 +141,9 @@ public class SearchPage extends AppCompatActivity implements NavigationView.OnNa
         Toast.makeText(this, "Back", Toast.LENGTH_SHORT).show();
     }
 
+    /**
+     * Wrapper function for the AsyncTaskRunner with error checking.
+     */
     private void getBuses() {
         // TextViews.
         stopNumber = findViewById(R.id.searchPageStopNumber);
@@ -144,7 +152,7 @@ public class SearchPage extends AppCompatActivity implements NavigationView.OnNa
         // 53987
 
         String tempURL = "";
-        String stopNo  = stopNumber.getText().toString().trim();
+        String stopNo = stopNumber.getText().toString().trim();
         String routeNo = routeNumber.getText().toString().trim();
 
         // Error messages.
@@ -213,9 +221,6 @@ public class SearchPage extends AppCompatActivity implements NavigationView.OnNa
             final String SEARCH_HISTORY_KEY = "search_history";
             final String ROUTE_OR_STOP;
 
-            // Push to the Firebase Realtime Database.
-            final FirebaseDatabase database = FirebaseDatabase.getInstance();
-
             // Generate the path.
             final StringBuilder path = new StringBuilder();
             path.append(USERS_KEY)
@@ -227,20 +232,14 @@ public class SearchPage extends AppCompatActivity implements NavigationView.OnNa
             DatabaseReference myRef;
 
             // Push to either the "stop" or "route" tree.
-            if(route_search_query != null) {
+            if (route_search_query != null) {
                 ROUTE_OR_STOP = "route";
                 path.append(ROUTE_OR_STOP);
-                myRef = database.getReference(path.toString());
-                myRef.setValue(route_search_query);
-                final String msg = "Search query saved: " + route_search_query;
-                Log.d(DEBUG_TAG, msg);
+                saveToFirebaseDatabase(path.toString(), stop_search_query);
             } else if (stop_search_query != null) {
                 ROUTE_OR_STOP = "stop";
                 path.append(ROUTE_OR_STOP);
-                myRef = database.getReference(path.toString());
-                myRef.setValue(stop_search_query);
-                final String msg = "Search query saved: " + stop_search_query;
-                Log.d(DEBUG_TAG, msg);
+                saveToFirebaseDatabase(path.toString(), stop_search_query);
             } else {
                 Log.d(DEBUG_TAG, "ERROR: ROUTE AND STOP QUERY ARE BOTH NULL");
             }
@@ -248,7 +247,20 @@ public class SearchPage extends AppCompatActivity implements NavigationView.OnNa
         } else {
             Log.d(DEBUG_TAG, "User is not logged in. Exiting function...");
         }
+    }
 
+    /**
+     * Uploads a given value to the given path on the Firebase Realtime Database.
+     *
+     * @param path  The path to upload to
+     * @param value The value to set at the path
+     */
+    private static void saveToFirebaseDatabase(final String path, final String value) {
+        final FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference myRef = database.getReference(path);
+        myRef.setValue(value);
+        final String msg = "Uploaded value: " + value;
+        Log.d(DEBUG_TAG, msg);
     }
 
     private class AsyncTaskRunner extends AsyncTask<String, Void, String> {
