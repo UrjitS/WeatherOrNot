@@ -46,8 +46,8 @@ public class SearchPage extends AppCompatActivity implements NavigationView.OnNa
     FragmentManager fragmentManager;
     EditText stopNumber, routeNumber;
 
-    private final String ESTIMATES_URL = "https://api.translink.ca/rttiapi/v1/stops";
-    private final String APP_ID = "H6I5JajNoTKkm7Ub2Wj0";
+    private static final String ESTIMATES_URL = "https://api.translink.ca/rttiapi/v1/stops";
+    private static final String APP_ID = "H6I5JajNoTKkm7Ub2Wj0";
 
     private final ArrayList<String> busesDestination = new ArrayList<>();
     private final ArrayList<String> busesTime = new ArrayList<>();
@@ -57,12 +57,13 @@ public class SearchPage extends AppCompatActivity implements NavigationView.OnNa
 
     FirebaseAuth firebaseAuth;
 
+    /** The tag for the debug messages. */
     public final static String DEBUG_TAG = "SearchPageDebug";
 
-    /**
-     * The text typed into either one of the search bars.
-     */
+    /** The text typed into the stop search bar. */
     private String stop_search_query;
+
+    /** The text typed into the route search bar. */
     private String route_search_query;
 
     @Override
@@ -229,7 +230,6 @@ public class SearchPage extends AppCompatActivity implements NavigationView.OnNa
                     .append("/")
                     .append(SEARCH_HISTORY_KEY)
                     .append("/");
-            DatabaseReference myRef;
 
             // Push to either the "stop" or "route" tree.
             if (route_search_query != null) {
@@ -263,6 +263,9 @@ public class SearchPage extends AppCompatActivity implements NavigationView.OnNa
         Log.d(DEBUG_TAG, msg);
     }
 
+    /** Retrieves the bus information.
+     *
+     */
     private class AsyncTaskRunner extends AsyncTask<String, Void, String> {
         @Override
         protected String doInBackground(String... strings) {
@@ -275,6 +278,7 @@ public class SearchPage extends AppCompatActivity implements NavigationView.OnNa
                             JSONObject jsonObject = xmlToJson.toJson();
                             Log.d("resp", String.valueOf(jsonObject));
 
+                            assert jsonObject != null;
                             JSONObject busesObj = jsonObject.getJSONObject("NextBuses");
                             JSONObject nextBusObj = busesObj.getJSONObject("NextBus");
                             JSONObject schedulesObj = nextBusObj.getJSONObject("Schedules");
