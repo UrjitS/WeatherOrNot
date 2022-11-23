@@ -1,6 +1,6 @@
 <resources>
     <!-- Login Page Strings -->
-    <string name="app_name">Weather Or Not</string>
+    <string name="app_name">Mainland Buses</string>
     <string name="app_logo">App Logo</string>
     <string name="sign_in">Sign In</string>
     <string name="email_field">Enter Email</string>

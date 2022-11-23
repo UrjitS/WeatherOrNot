@@ -47,12 +47,14 @@ public class ImageFragment extends Fragment implements OnMapReadyCallback {
             recTime = getArguments().getString("time");
             patternVal = getArguments().getString("pattern");
             lastUpd = getArguments().getString("lastUpdate");
+
             imageId = getArguments().getInt("image");
             this.stopNo = getArguments().getString("StopNo");
             this.routeNo = getArguments().getString("RoutNo");
         }
 
     }
+
     @Override
     public void onMapReady(@NonNull com.google.android.gms.maps.GoogleMap googleMap) {
         googleMapS = googleMap;
@@ -64,10 +66,6 @@ public class ImageFragment extends Fragment implements OnMapReadyCallback {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-
-
-        System.out.println("STOP: " + stopNo);
-        System.out.println("ROUTE: " + routeNo);
 
         View myView = inflater.inflate(R.layout.fragment_image, container, false);
         mapFragment = (SupportMapFragment) this.getChildFragmentManager().findFragmentById(R.id.mapAPI);
