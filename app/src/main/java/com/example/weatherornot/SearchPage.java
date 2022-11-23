@@ -60,7 +60,8 @@ public class SearchPage extends AppCompatActivity implements NavigationView.OnNa
     public final static String DEBUG_TAG = "SearchPageDebug";
 
     /** The text typed into either one of the search bars. */
-    private String search_query;
+    private String stop_search_query;
+    private String route_search_query;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -159,7 +160,7 @@ public class SearchPage extends AppCompatActivity implements NavigationView.OnNa
                 // SUCCESS: The search term is a valid integer.
                 // Set the tempURL and proceed.
                 // https://api.translink.ca/rttiapi/v1/stops/60980/estimates
-                search_query = stopNo;
+                stop_search_query = stopNo;
                 tempURL = ESTIMATES_URL + "/" + stopNo + "/estimates?apikey=" + APP_ID + "&routeNo=" + routeNo;
             } catch (NumberFormatException e) {
                 // FAILURE: The search term is not a valid integer.
@@ -176,7 +177,7 @@ public class SearchPage extends AppCompatActivity implements NavigationView.OnNa
                 Integer.parseInt(routeNo);
                 // SUCCESS: The search term is a valid integer.
                 // Set the tempURL and proceed.
-                search_query = routeNo;
+                route_search_query = routeNo;
                 tempURL = ESTIMATES_URL + "/" + routeNo + "/estimates?apikey=" + APP_ID;
             } catch (NumberFormatException e) {
                 // FAILURE: The search term is not a valid integer.
@@ -204,21 +205,46 @@ public class SearchPage extends AppCompatActivity implements NavigationView.OnNa
         firebaseAuth = FirebaseAuth.getInstance();
         final FirebaseUser user = firebaseAuth.getCurrentUser();
         if (user != null) {
-            final String emailMSG = "User" + user.getEmail() + " is logged in. Saving search query...";
+            final String emailMSG = "User " + user.getEmail() + " is logged in. Saving search query...";
             Log.d(DEBUG_TAG, emailMSG);
-            FirebaseDatabase database = FirebaseDatabase.getInstance();
 
             // Keys for the database.
             final String USERS_KEY = "users";
             final String SEARCH_HISTORY_KEY = "search_history";
+            final String ROUTE_OR_STOP;
 
             // Push to the Firebase Realtime Database.
-            DatabaseReference myRef = database.getReference("test");
-            myRef.setValue(search_query);
+            final FirebaseDatabase database = FirebaseDatabase.getInstance();
 
+            // Generate the path.
+            final StringBuilder path = new StringBuilder();
+            path.append(USERS_KEY)
+                    .append("/")
+                    .append(user.getUid())
+                    .append("/")
+                    .append(SEARCH_HISTORY_KEY)
+                    .append("/");
+            DatabaseReference myRef;
 
-            final String msg = "Search query saved: " + search_query;
-            Log.d(DEBUG_TAG, msg);
+            // Push to either the "stop" or "route" tree.
+            if(route_search_query != null) {
+                ROUTE_OR_STOP = "route";
+                path.append(ROUTE_OR_STOP);
+                myRef = database.getReference(path.toString());
+                myRef.setValue(route_search_query);
+                final String msg = "Search query saved: " + route_search_query;
+                Log.d(DEBUG_TAG, msg);
+            } else if (stop_search_query != null) {
+                ROUTE_OR_STOP = "stop";
+                path.append(ROUTE_OR_STOP);
+                myRef = database.getReference(path.toString());
+                myRef.setValue(stop_search_query);
+                final String msg = "Search query saved: " + stop_search_query;
+                Log.d(DEBUG_TAG, msg);
+            } else {
+                Log.d(DEBUG_TAG, "ERROR: ROUTE AND STOP QUERY ARE BOTH NULL");
+            }
+
         } else {
             Log.d(DEBUG_TAG, "User is not logged in. Exiting function...");
         }
