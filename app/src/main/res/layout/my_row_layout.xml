@@ -112,37 +112,9 @@
             app:layout_constraintTop_toTopOf="@+id/MyRowDestination"
             app:layout_constraintVertical_bias="0.682" />
 
-        <TextView
-            android:id="@+id/lastBusTimeTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:width="240dp"
-            android:paddingHorizontal="10dp"
-            android:text="Last bus arrival time"
-            android:textColor="@color/black"
-            android:textSize="16sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="1.0"
-            app:layout_constraintStart_toEndOf="@+id/imageView"
-            app:layout_constraintTop_toTopOf="@+id/MyRowDestination"
-            app:layout_constraintVertical_bias="0.867" />
 
-        <TextView
-            android:id="@+id/myRowLastBusLeaveTime"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:width="240dp"
-            android:paddingHorizontal="10dp"
-            android:text="@string/last_bus_that_arrival_time"
-            android:textColor="@color/black"
-            android:textSize="16sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="1.0"
-            app:layout_constraintStart_toEndOf="@+id/imageView"
-            app:layout_constraintTop_toTopOf="@+id/MyRowDestination"
-            app:layout_constraintVertical_bias="0.994" />
+
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

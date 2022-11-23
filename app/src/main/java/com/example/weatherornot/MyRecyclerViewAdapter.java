@@ -16,18 +16,17 @@ import java.util.ArrayList;
 public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAdapter.MyViewHolder> {
 
     Context c;
-    ArrayList<String> destination, times, pattern, bLastUpdate;
+    ArrayList<String> destination, times, pattern;
     int[] images;
     private ItemClickListener clickListener;
 
     public MyRecyclerViewAdapter(Context c, ArrayList<String> dest,
                                  ArrayList<String> time, ArrayList<String> pat,
-                                 ArrayList<String> lastUpd, int[] images) {
+                                 int[] images) {
         this.c = c;
         this.destination = dest;
         this.times = time;
         this.pattern = pat;
-        this.bLastUpdate = lastUpd;
         this.images = images;
     }
 
@@ -44,7 +43,6 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
         holder.text1.setText(destination.get(position));
         holder.text2.setText(times.get(position));
         holder.text3.setText(pattern.get(position));
-        holder.text4.setText(bLastUpdate.get(position));
 //        holder.text5.setText(bLastUpdate.get(position));
         holder.image.setImageResource(images[position]);
     }
@@ -67,7 +65,6 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
             text1 = itemView.findViewById(R.id.MyRowDestination);
             text2 = itemView.findViewById(R.id.MyRowTime);
             text3 = itemView.findViewById(R.id.MyRowPattern);
-            text4 = itemView.findViewById(R.id.myRowLastBusLeaveTime);
 //            text5 = itemView.findViewById(R.id.myRowVehicleNumber);
             image = itemView.findViewById(R.id.imageView);
             itemView.setOnClickListener(this);

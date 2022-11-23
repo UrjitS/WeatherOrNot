@@ -52,7 +52,6 @@ public class SearchPage extends AppCompatActivity implements NavigationView.OnNa
     private final ArrayList<String> busesDestination = new ArrayList<>();
     private final ArrayList<String> busesTime = new ArrayList<>();
     private final ArrayList<String> busPattern = new ArrayList<>();
-    private final ArrayList<String> busLastUpdate = new ArrayList<>();
 
 
     FirebaseAuth firebaseAuth;
@@ -159,6 +158,12 @@ public class SearchPage extends AppCompatActivity implements NavigationView.OnNa
         // Error messages.
         final String errorMSGStop = "Please enter a valid stop number.";
         final String errorMSGRoute = "Please enter a valid route number.";
+
+        if (stopNo.isEmpty() && routeNo.isEmpty()) {
+            final Toast t = Toast.makeText(getApplicationContext(), errorMSGStop, Toast.LENGTH_LONG);
+            t.show();
+            return;
+        }
 
         // Error checking for STOPS.
         if (!stopNumber.getText().toString().isEmpty() && routeNumber.getText().toString().isEmpty()) {
@@ -269,7 +274,9 @@ public class SearchPage extends AppCompatActivity implements NavigationView.OnNa
     private class AsyncTaskRunner extends AsyncTask<String, Void, String> {
         @Override
         protected String doInBackground(String... strings) {
-
+            busesDestination.clear();
+            busesTime.clear();
+            busPattern.clear();
             RequestQueue queue = Volley.newRequestQueue(SearchPage.this);
             StringRequest stringRequest = new StringRequest(Request.Method.GET, strings[0],
                     response -> {
@@ -280,33 +287,62 @@ public class SearchPage extends AppCompatActivity implements NavigationView.OnNa
 
                             assert jsonObject != null;
                             JSONObject busesObj = jsonObject.getJSONObject("NextBuses");
-                            JSONObject nextBusObj = busesObj.getJSONObject("NextBus");
-                            JSONObject schedulesObj = nextBusObj.getJSONObject("Schedules");
-                            JSONArray busScheduleObj = schedulesObj.getJSONArray("Schedule");
+                            try {
+                                JSONArray nextBusObj = busesObj.getJSONArray("NextBus");
 
-                            for (int i = 0; i < busScheduleObj.length(); i++) {
-                                String destination = busScheduleObj.getJSONObject(i).getString("Destination");
-                                String expectedLeaveTime = busScheduleObj.getJSONObject(i).getString("ExpectedLeaveTime");
-                                String lastTimeUpdate = busScheduleObj.getJSONObject(i).getString("LastUpdate");
-                                String pattern = busScheduleObj.getJSONObject(i).getString("Pattern");
-                                busesDestination.add(destination);
-                                busesTime.add(expectedLeaveTime);
-                                busPattern.add(pattern);
-                                busLastUpdate.add(lastTimeUpdate);
+                                for (int i = 0; i < nextBusObj.length(); i++) {
+                                    JSONObject schedulesObj = nextBusObj.getJSONObject(i).getJSONObject("Schedules");
+                                    JSONArray busScheduleObj = schedulesObj.getJSONArray("Schedule");
+
+                                    for (int j = 0; j < busScheduleObj.length(); j++) {
+                                        String destination = busScheduleObj.getJSONObject(j).getString("Destination");
+                                        String expectedLeaveTime = busScheduleObj.getJSONObject(j).getString("ExpectedLeaveTime");
+
+                                        String pattern = busScheduleObj.getJSONObject(j).getString("Pattern");
+                                        busesDestination.add(destination);
+                                        busesTime.add(expectedLeaveTime);
+                                        busPattern.add(pattern);
+                                    }
+                                    Bundle bundle = new Bundle();
+                                    bundle.putStringArrayList("Destination", busesDestination);
+                                    bundle.putStringArrayList("Times", busesTime);
+                                    bundle.putStringArrayList("Pattern", busPattern);
+                                    bundle.putString("StopNo", strings[1]);
+                                    bundle.putString("RoutNo", strings[2]);
+
+                                    Fragment results = new ResultsFragment();
+                                    results.setArguments(bundle);
+                                    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                                    fragmentTransaction.replace(R.id.ctnFragment, results);
+                                    fragmentTransaction.commit();
+                                }
+                            } catch (JSONException ex) {
+                                JSONObject nextBusObj = busesObj.getJSONObject("NextBus");
+                                JSONObject schedulesObj = nextBusObj.getJSONObject("Schedules");
+                                JSONArray busScheduleObj = schedulesObj.getJSONArray("Schedule");
+
+                                for (int i = 0; i < busScheduleObj.length(); i++) {
+                                    String destination = busScheduleObj.getJSONObject(i).getString("Destination");
+                                    String expectedLeaveTime = busScheduleObj.getJSONObject(i).getString("ExpectedLeaveTime");
+                                    String pattern = busScheduleObj.getJSONObject(i).getString("Pattern");
+                                    busesDestination.add(destination);
+                                    busesTime.add(expectedLeaveTime);
+                                    busPattern.add(pattern);
+                                }
+                                Bundle bundle = new Bundle();
+                                bundle.putStringArrayList("Destination", busesDestination);
+                                bundle.putStringArrayList("Times", busesTime);
+                                bundle.putStringArrayList("Pattern", busPattern);
+                                bundle.putString("StopNo", strings[1]);
+                                bundle.putString("RoutNo", strings[2]);
+
+                                Fragment results = new ResultsFragment();
+                                results.setArguments(bundle);
+                                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                                fragmentTransaction.replace(R.id.ctnFragment, results);
+                                fragmentTransaction.commit();
                             }
-                            Bundle bundle = new Bundle();
-                            bundle.putStringArrayList("Destination", busesDestination);
-                            bundle.putStringArrayList("Times", busesTime);
-                            bundle.putStringArrayList("Pattern", busPattern);
-                            bundle.putStringArrayList("LastUpdate", busLastUpdate);
-                            bundle.putString("StopNo", strings[1]);
-                            bundle.putString("RoutNo", strings[2]);
 
-                            Fragment results = new ResultsFragment();
-                            results.setArguments(bundle);
-                            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                            fragmentTransaction.replace(R.id.ctnFragment, results);
-                            fragmentTransaction.commit();
                         } catch (JSONException e) {
                             System.out.println(e.getMessage());
                         }

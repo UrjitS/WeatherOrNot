@@ -90,7 +90,6 @@
     <string name="temp_route_number">temp route number</string>
     <string name="vehicle_num">vehicle num</string>
     <string name="bus_arrival_time">Bus arrival time</string>
-    <string name="last_bus_that_arrival_time">last bus that arrival time</string>
     <string name="bus_pattern">bus pattern</string>
 
 
