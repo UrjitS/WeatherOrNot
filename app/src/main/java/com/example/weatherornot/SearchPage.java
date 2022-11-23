@@ -66,6 +66,11 @@ public class SearchPage extends AppCompatActivity implements NavigationView.OnNa
      */
     private String stop_search_query;
 
+    /**
+     * The maximum length of a bus stop query.
+     */
+    private static final int MAX_STOP_QUERY_LENGTH = 5;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -138,10 +143,6 @@ public class SearchPage extends AppCompatActivity implements NavigationView.OnNa
         return true;
     }
 
-    public void BackToSearch(View view) {
-        Toast.makeText(this, "Back", Toast.LENGTH_SHORT).show();
-    }
-
     /**
      * Wrapper function for the AsyncTaskRunner with error checking.
      */
@@ -168,7 +169,7 @@ public class SearchPage extends AppCompatActivity implements NavigationView.OnNa
         // Error checking for STOPS.
         if (!stopNumber.getText().toString().isEmpty()) {
             // If the search term is more than 5 characters, exit the function with a message.
-            if (stopNumber.getText().toString().length() > 5) {
+            if (stopNumber.getText().toString().length() > MAX_STOP_QUERY_LENGTH) {
                 final Toast t = Toast.makeText(getApplicationContext(), errorMSGStop, Toast.LENGTH_SHORT);
                 t.show();
                 return;
@@ -230,6 +231,12 @@ public class SearchPage extends AppCompatActivity implements NavigationView.OnNa
                     .append("/")
                     .append(SEARCH_HISTORY_KEY)
                     .append("/");
+
+            // If the query is more than 5 characters, exit the function.
+            if (stop_search_query.length() > MAX_STOP_QUERY_LENGTH) {
+                Log.d(DEBUG_TAG, "Invalid search query. Upload cancelled.");
+                return;
+            }
 
             // Push to the "stop" tree
             if (stop_search_query != null) {
