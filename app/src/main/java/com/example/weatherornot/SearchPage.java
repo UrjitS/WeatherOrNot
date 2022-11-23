@@ -44,7 +44,7 @@ public class SearchPage extends AppCompatActivity implements NavigationView.OnNa
     NavigationView navigationView;
     Toolbar toolbar;
     FragmentManager fragmentManager;
-    EditText stopNumber, routeNumber;
+    EditText stopNumber;
 
     private static final String ESTIMATES_URL = "https://api.translink.ca/rttiapi/v1/stops";
     private static final String APP_ID = "H6I5JajNoTKkm7Ub2Wj0";
@@ -147,7 +147,6 @@ public class SearchPage extends AppCompatActivity implements NavigationView.OnNa
     private void getBuses() {
         // TextViews.
         stopNumber = findViewById(R.id.searchPageStopNumber);
-        routeNumber = findViewById(R.id.searchPageRouteNumber);
 
         // 53987
 

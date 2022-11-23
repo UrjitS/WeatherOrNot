@@ -54,25 +54,12 @@
         android:importantForAutofill="no"
         android:inputType="numberDecimal"
         android:textColorHint="@color/black"
+        android:translationY="50dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.462"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <EditText
-        android:id="@+id/searchPageRouteNumber"
-        android:layout_width="wrap_content"
-        android:layout_height="48dp"
-        android:layout_marginBottom="412dp"
-        android:ems="10"
-        android:hint="@string/route_number"
-        android:importantForAutofill="no"
-        android:inputType="text"
-        android:textColorHint="@color/black"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.462"
-        app:layout_constraintStart_toStartOf="parent" />
 
     <Button
         android:id="@+id/searchPage_button_search"
@@ -84,7 +71,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.656"
-        app:layout_constraintStart_toStartOf="@id/searchPageRouteNumber"
+        app:layout_constraintStart_toStartOf="@id/searchPageStopNumber"
         tools:ignore="DuplicateSpeakableTextCheck,DuplicateClickableBoundsCheck" />
 
     <Button
@@ -98,7 +85,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@id/searchPageRouteNumber"
+        app:layout_constraintStart_toStartOf="@id/searchPageStopNumber"
         tools:ignore="DuplicateSpeakableTextCheck" />
 
     <androidx.fragment.app.FragmentContainerView
