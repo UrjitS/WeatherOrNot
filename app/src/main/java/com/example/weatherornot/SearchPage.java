@@ -59,6 +59,9 @@ public class SearchPage extends AppCompatActivity implements NavigationView.OnNa
 
     public final static String DEBUG_TAG = "SearchPageDebug";
 
+    /** The text typed into either one of the search bars. */
+    private String search_query;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -156,6 +159,7 @@ public class SearchPage extends AppCompatActivity implements NavigationView.OnNa
                 // SUCCESS: The search term is a valid integer.
                 // Set the tempURL and proceed.
                 // https://api.translink.ca/rttiapi/v1/stops/60980/estimates
+                search_query = stopNo;
                 tempURL = ESTIMATES_URL + "/" + stopNo + "/estimates?apikey=" + APP_ID + "&routeNo=" + routeNo;
             } catch (NumberFormatException e) {
                 // FAILURE: The search term is not a valid integer.
@@ -166,13 +170,14 @@ public class SearchPage extends AppCompatActivity implements NavigationView.OnNa
         }
 
         // Error checking for ROUTES.
-        else if (!stopNumber.getText().toString().isEmpty() && routeNumber.getText().toString().isEmpty()) {
+        else if (!routeNumber.getText().toString().isEmpty() && routeNumber.getText().toString().isEmpty()) {
             // If the search term is not a valid integer, exit function with message.
             try {
-                Integer.parseInt(stopNo);
+                Integer.parseInt(routeNo);
                 // SUCCESS: The search term is a valid integer.
                 // Set the tempURL and proceed.
-                tempURL = ESTIMATES_URL + "/" + stopNo + "/estimates?apikey=" + APP_ID;
+                search_query = routeNo;
+                tempURL = ESTIMATES_URL + "/" + routeNo + "/estimates?apikey=" + APP_ID;
             } catch (NumberFormatException e) {
                 // FAILURE: The search term is not a valid integer.
                 final Toast t = Toast.makeText(getApplicationContext(), errorMSGRoute, Toast.LENGTH_LONG);
@@ -199,27 +204,24 @@ public class SearchPage extends AppCompatActivity implements NavigationView.OnNa
         firebaseAuth = FirebaseAuth.getInstance();
         final FirebaseUser user = firebaseAuth.getCurrentUser();
         if (user != null) {
-            Log.d(DEBUG_TAG, "User is logged in. Saving search query...");
-            DatabaseReference db = FirebaseDatabase.getInstance().getReference();
+            final String emailMSG = "User" + user.getEmail() + " is logged in. Saving search query...";
+            Log.d(DEBUG_TAG, emailMSG);
+            FirebaseDatabase database = FirebaseDatabase.getInstance();
 
             // Keys for the database.
             final String USERS_KEY = "users";
             final String SEARCH_HISTORY_KEY = "search_history";
 
-            // The search query.
-            final String SEARCH_QUERY = "";
-
             // Push to the Firebase Realtime Database.
-            db
-                    .child(USERS_KEY) // The "users" tree.
-                    .child(user.getUid()) // The user UID.
-                    .child(SEARCH_HISTORY_KEY) // The "search_history" tree.
-                    .push();
+            DatabaseReference myRef = database.getReference("test");
+            myRef.setValue(search_query);
 
-            Log.d(DEBUG_TAG, "Search query saved.");
+
+            final String msg = "Search query saved: " + search_query;
+            Log.d(DEBUG_TAG, msg);
+        } else {
+            Log.d(DEBUG_TAG, "User is not logged in. Exiting function...");
         }
-
-        Log.d(DEBUG_TAG, "User is not logged in. Exiting function...");
 
     }
 
