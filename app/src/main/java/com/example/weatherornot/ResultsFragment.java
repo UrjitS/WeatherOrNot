@@ -42,7 +42,7 @@ public class ResultsFragment extends Fragment implements ItemClickListener {
 
         images = new int[destination.size()];
         for (int i = 0; i < destination.size(); i++) {
-            images[i] = R.drawable.translink_bus_image;
+            images[i] = R.drawable.translink;
         }
 
         MyRecyclerViewAdapter myRecyclerViewAdapter = new
