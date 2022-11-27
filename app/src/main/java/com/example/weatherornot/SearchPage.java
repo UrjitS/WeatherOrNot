@@ -99,8 +99,8 @@ public class SearchPage extends AppCompatActivity implements NavigationView.OnNa
      * Button handler for search button.
      */
     public void searchButtonHandler(View view) {
-        uploadSearchQueryToFireBase();
         getBuses();
+        uploadSearchQueryToFireBase();
     }
 
     /**

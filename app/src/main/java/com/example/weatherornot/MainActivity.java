@@ -53,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
         String password = passwordField.getText().toString().trim();
         // >6 at least one capital, at least one special, at least one number
 
-        if (passwordIsValid(password)) {
+        if (!passwordIsValid(password)) {
             Toast.makeText(MainActivity.this, "Please enter an email with a capital letter, special character, and numbers.",
                     Toast.LENGTH_SHORT).show();
         }

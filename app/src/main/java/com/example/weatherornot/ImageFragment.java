@@ -1,5 +1,6 @@
 package com.example.weatherornot;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -102,6 +103,7 @@ public class ImageFragment extends Fragment implements OnMapReadyCallback {
 
         return myView;
     }
+    @SuppressLint("StaticFieldLeak")
     private class AsyncTaskRunner extends AsyncTask<String, Void, String> {
         @Override
         protected String doInBackground(String... strings) {

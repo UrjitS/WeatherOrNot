@@ -43,7 +43,7 @@ public class SignUpPage extends AppCompatActivity {
         final EditText passwordField = findViewById(R.id.signUpPassword);
         final String email = emailField.getText().toString().trim();
         final String password = passwordField.getText().toString().trim();
-        if (passwordIsValid(password)) {
+        if (!passwordIsValid(password)) {
             Toast.makeText(SignUpPage.this, "Please enter an email with a capital letter, special character, and numbers.",
                     Toast.LENGTH_SHORT).show();
         }
